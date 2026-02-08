@@ -3,8 +3,8 @@
 
 @section('content')
     <div class="content-wrapper">
-        @php $currencySymbol = $siteSettings->currency_symbol ?? '₦'; @endphp
-        @include('user.partials.kyc_notification')
+        @php $currencySymbol = $siteSettings->currency_symbol ?? '$'; @endphp
+        {{-- @include('user.partials.kyc_notification') --}}
 
         <div class="row">
             <div class="col-12 grid-margin mx-auto">
@@ -461,8 +461,8 @@
                                         <input type="text"
                                             class="form-control @error('project_location') is-invalid @enderror"
                                             id="project_location" name="project_location"
-                                            value="{{ old('project_location') }}" placeholder="e.g. Owerri, Imo State"
-                                            required data-parsley-required="true"
+                                            value="{{ old('project_location') }}" placeholder="Location Address" required
+                                            data-parsley-required="true"
                                             data-parsley-required-message="Project location is required">
                                         @error('project_location')
                                             <div class="invalid-feedback">{{ $message }}</div>
