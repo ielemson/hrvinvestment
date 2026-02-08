@@ -3,11 +3,11 @@
 @section('content')
     <div class="container">
 
-        @include('user.partials.kyc_notification')
+        {{-- @include('user.partials.kyc_notification') --}}
         @include('user.partials.alerts')
         <!-- =====================
-                                                                        SUMMARY CARDS
-                                                                        ====================== -->
+                                                                                SUMMARY CARDS
+                                                                                ====================== -->
         @php
             // DB: site_settings fields
 
@@ -134,8 +134,8 @@
         </div>
 
         <!-- =====================
-                                        LOAN PROGRESS + KYC
-                                        ====================== -->
+                                                LOAN PROGRESS + KYC
+                                                ====================== -->
         <div class="row">
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card shadow-sm h-100">
@@ -335,7 +335,7 @@
 
                         {{-- Action --}}
                         @if ($current['cta'])
-                            <a href="{{ route('user.kyc.edit') }}"
+                            <a href="{{ route('user.loans.create') }}"
                                 class="btn btn-{{ $kycStatus === 'rejected' ? 'danger' : 'primary' }} btn-block btn-lg">
                                 <i class="mdi mdi-{{ $kycStatus === 'rejected' ? 'redo' : 'upload' }} mr-2"></i>
                                 {{ $current['cta'] }}
@@ -359,8 +359,8 @@
         </div>
 
         <!-- =====================
-                                                           LOAN HISTORY
-                                               ====================== -->
+                                                                   LOAN HISTORY
+                                                       ====================== -->
         <div class="row">
             <div class="col-12 grid-margin">
                 <div class="card">
@@ -443,8 +443,8 @@
                 </div>
             </div>
             <!-- =====================
-                                                                                                            REPAYMENT HISTORY
-                                                                                   ====================== -->
+                                                                                                                            REPAYMENT HISTORY
+                                                                                                   ====================== -->
             <div class="row">
                 <div class="col-12 grid-margin">
                     <div class="card">
@@ -494,8 +494,8 @@
 
 
             <!-- =====================
-                                                                                                                    NOTIFICATIONS
-                                                                                                                    ====================== -->
+                                                                                                                                    NOTIFICATIONS
+                                                                                                                                    ====================== -->
             {{-- <div class="row">
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card">

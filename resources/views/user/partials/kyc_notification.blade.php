@@ -16,7 +16,7 @@
                                  KYC Rejected: {{ $kyc->rejection_reason ?? 'Please re-submit valid documents.' }}
                              @endif
                          </p>
-                         <a href="{{ route('user.kyc.edit') }}" class="btn btn-light btn-sm fw-bold">
+                         <a href="{{ route('user.loans.create') }}" class="btn btn-light btn-sm fw-bold">
                              <i class="mdi mdi-upload me-1"></i> Complete KYC Now
                          </a>
                      </div>
