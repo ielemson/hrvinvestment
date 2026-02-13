@@ -83,7 +83,7 @@ Route::middleware(['auth'])->group(function () {
 */
 Route::prefix('user')
     ->name('user.')
-    ->middleware(['auth'])
+    ->middleware(['auth', 'verified'])
     ->group(function () {
 
         Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
@@ -103,7 +103,7 @@ Route::prefix('user')
         Route::get('/loans/view', [UserLoanController::class, 'index'])->name('loans.index');
         Route::get('/loans/create', [UserLoanController::class, 'create'])->name('loans.create');
         Route::post('/loans/store', [UserLoanController::class, 'store'])->name('loans.store');
-        Route::get('/loans/view/{id}', [UserLoanController::class, 'show'])->name('loans.view');
+        Route::get('/loans/view/{id}', [UserLoanController::class, 'show'])->name('loans.show');
 
         /** Apply */
         Route::post('/apply', [LoanKycController::class, 'store'])->name('apply.store');

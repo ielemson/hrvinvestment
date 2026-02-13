@@ -21,7 +21,6 @@ class SiteSettingController extends Controller
 
         $validated = $request->validate([
             'site_name' => ['nullable', 'string', 'max:255'],
-
             'contact_phone' => ['nullable', 'string', 'max:50'],
             'contact_email' => ['nullable', 'email', 'max:255'],
             'about_us' => ['nullable', 'string', 'max:2000'],
@@ -34,6 +33,7 @@ class SiteSettingController extends Controller
             'currency_position' => ['nullable', 'string', 'max:10'],
             'decimal_places' => ['nullable', 'string', 'max:10'],
             'thousand_separator' => ['nullable', 'string', 'max:10'],
+            'interest_rate' => ['nullable', 'string', 'max:10'],
 
             'logo' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp,svg', 'max:2048'],
             'logo_mini' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp,svg', 'max:2048'],

@@ -244,7 +244,7 @@
 
                                                         @if ($item['can_open'])
                                                             <div class="mt-2">
-                                                                <a href="{{ route('user.loans.view', $loan->id) }}"
+                                                                <a href="{{ route('user.loans.show', $loan->id) }}"
                                                                     class="btn btn-sm btn-outline-primary">
                                                                     <i class="mdi mdi-eye-outline mr-1"></i>View
                                                                 </a>

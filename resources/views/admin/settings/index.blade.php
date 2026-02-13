@@ -280,6 +280,19 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="interest_rate">Loan Interest Rate (%)</label>
+                                    <input type="text" id="interest_rate" name="interest_rate"
+                                        class="form-control @error('interest_rate') is-invalid @enderror"
+                                        value="{{ old('interest_rate', $settings->interest_rate ?? '0') }}"
+                                        placeholder=".">
+                                    @error('decimal_separator')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6"></div>
                         </div>
 
                         {{-- Preview (Dummy) --}}

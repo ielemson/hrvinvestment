@@ -765,6 +765,12 @@
                                     </div>
                                 </div>
 
+                                @php
+
+                                    // Optional support email (fallback)
+                                    $interest_rate = $siteSettings->interest_rate ?? 0;
+
+                                @endphp
                                 {{-- Interest rate --}}
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -772,10 +778,9 @@
                                                 class="text-danger">*</span></label>
                                         <input type="number"
                                             class="form-control @error('interest_rate') is-invalid @enderror"
-                                            id="interest_rate" name="interest_rate" value="{{ old('interest_rate') }}"
-                                            min="0" max="100" step="0.01" placeholder="e.g. 7.5" required
-                                            data-parsley-required="true"
-                                            data-parsley-required-message="Interest rate is required">
+                                            id="interest_rate" name="interest_rate" value="{{ $interest_rate }}"
+                                            required data-parsley-required="true"
+                                            data-parsley-required-message="Interest rate is required" readonly>
                                         @error('interest_rate')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror

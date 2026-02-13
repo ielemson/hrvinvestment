@@ -26,6 +26,7 @@ protected $fillable = [
     'thousand_separator',
     'decimal_separator',
     'decimal_places',
+    'interest_rate'
 ];
 
 }
