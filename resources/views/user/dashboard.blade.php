@@ -6,8 +6,8 @@
         {{-- @include('user.partials.kyc_notification') --}}
         @include('user.partials.alerts')
         <!-- =====================
-                                                                                                    SUMMARY CARDS
-                                                                                                    ====================== -->
+                                                                                                        SUMMARY CARDS
+                                                                                                        ====================== -->
         @php
             // DB: site_settings fields
 
@@ -134,8 +134,8 @@
         </div>
 
         <!-- =====================
-            LOAN PROGRESS + KYC
-            ====================== -->
+                LOAN PROGRESS + KYC
+                ====================== -->
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card mx-auto">
                 <div class="card shadow-sm h-100">
@@ -244,7 +244,7 @@
 
                                                         @if ($item['can_open'])
                                                             <div class="mt-2">
-                                                                <a href="{{ route('user.loans.show', $loan->id) }}"
+                                                                <a href="{{ route('user.loans.view', $loan->id) }}"
                                                                     class="btn btn-sm btn-outline-primary">
                                                                     <i class="mdi mdi-eye-outline mr-1"></i>View
                                                                 </a>
@@ -276,8 +276,8 @@
         </div>
 
         <!-- =====================
-                                                                                       LOAN HISTORY
-                                                                           ====================== -->
+                                                                                           LOAN HISTORY
+                                                                               ====================== -->
         <div class="row">
             <div class="col-12 grid-margin">
                 <div class="card">
@@ -360,8 +360,8 @@
                 </div>
             </div>
             <!-- =====================
-                                                                                                                                                                    REPAYMENT HISTORY
-                                                                                                                                           ====================== -->
+                                                                                                                                                                            REPAYMENT HISTORY
+                                                                                                                                                   ====================== -->
             <div class="row">
                 <div class="col-12 grid-margin">
                     <div class="card">
@@ -411,8 +411,8 @@
 
 
             <!-- =====================
-                                                                                                                                                                            NOTIFICATIONS
-                                                                                                                                                                            ====================== -->
+                                                                                                                                                                                    NOTIFICATIONS
+                                                                                                                                                                                    ====================== -->
             {{-- <div class="row">
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card">
