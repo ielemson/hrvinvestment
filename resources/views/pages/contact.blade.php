@@ -119,7 +119,7 @@
 
                 @php
                     // DB: site_settings fields
-                    $siteName = $siteSettings->site_name ?? config('app.name', 'HV Capitals');
+                    $siteName = $siteSettings->site_name ?? config('app.name', 'Hello HV UK RF1 Investments');
 
                     $logo = $siteSettings->logo_path ?? 'assets/images/logo.png';
                     $logoMini = $siteSettings->logo_mini_path ?? $logo;

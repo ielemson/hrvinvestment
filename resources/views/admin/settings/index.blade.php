@@ -181,7 +181,7 @@
                                 class="form-control @error('currency_code') is-invalid @enderror">
                                 @php
                                     $currencies = [
-                                        ['code' => 'NGN', 'symbol' => '₦', 'name' => 'Nigerian Naira'],
+                                        ['code' => 'NGN', 'symbol' => '$', 'name' => 'Nigerian Naira'],
                                         ['code' => 'USD', 'symbol' => '$', 'name' => 'US Dollar'],
                                         ['code' => 'GBP', 'symbol' => '£', 'name' => 'British Pound'],
                                         ['code' => 'EUR', 'symbol' => '€', 'name' => 'Euro'],
@@ -213,8 +213,8 @@
                             <label for="currency_symbol">Currency Symbol</label>
                             <input type="text" id="currency_symbol" name="currency_symbol"
                                 class="form-control @error('currency_symbol') is-invalid @enderror"
-                                value="{{ old('currency_symbol', $settings->currency_symbol ?? '₦') }}"
-                                placeholder="e.g. ₦ or $ or £">
+                                value="{{ old('currency_symbol', $settings->currency_symbol ?? '$') }}"
+                                placeholder="e.g. $ or $ or £">
                             @error('currency_symbol')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -228,11 +228,11 @@
                                 class="form-control @error('currency_position') is-invalid @enderror">
                                 <option value="before"
                                     {{ old('currency_position', $settings->currency_position ?? 'before') === 'before' ? 'selected' : '' }}>
-                                    Before amount (₦10,000)
+                                    Before amount ($10,000)
                                 </option>
                                 <option value="after"
                                     {{ old('currency_position', $settings->currency_position ?? 'before') === 'after' ? 'selected' : '' }}>
-                                    After amount (10,000₦)
+                                    After amount (10,000$)
                                 </option>
                             </select>
                             @error('currency_position')
@@ -285,7 +285,7 @@
                         {{-- Preview (Dummy) --}}
                         <div class="alert alert-light border">
                             <strong>Preview:</strong>
-                            <span id="currency-preview">₦10,000</span>
+                            <span id="currency-preview">$10,000</span>
                         </div>
 
                         <button type="submit" class="btn btn-primary mr-2">Save Currency</button>

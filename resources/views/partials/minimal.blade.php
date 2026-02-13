@@ -16,7 +16,7 @@
 
                         @php
                             $logo = $siteSettings->logo_path ?? 'images/logo.png';
-                            $siteName = $siteSettings->site_name ?? config('app.name', 'HV Capitals');
+                            $siteName = $siteSettings->site_name ?? config('app.name', 'Hello HV UK RF1 Investments');
                         @endphp
 
                         <a class="rd-navbar-brand" href="{{ route('home') }}">

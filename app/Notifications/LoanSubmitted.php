@@ -25,7 +25,7 @@ class LoanSubmitted extends Notification implements ShouldQueue
             ->subject('Loan Application Submitted')
             ->greeting('Hello ' . ($notifiable->name ?? ''))
             ->line('Your loan application has been submitted successfully.')
-            ->line('Amount Requested: ₦' . number_format((float)$this->loan->amount_requested, 2))
+            ->line('Amount Requested: $' . number_format((float)$this->loan->amount_requested, 2))
             ->line('Tenure: ' . $this->loan->tenure_months . ' months')
             ->line('Status: ' . strtoupper(str_replace('_', ' ', $this->loan->status)))
             ->action('View Loan Status', url('/dashboard'))

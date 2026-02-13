@@ -164,7 +164,7 @@ class UserDashboardController extends Controller
             'workflowUI'
         ) + [
             'kycApproved'    => $kycStatus === 'approved',
-            'currencySymbol' => config('app.currency_symbol', '₦'),
+            'currencySymbol' => config('app.currency_symbol', '$'),
         ]);
     }
 

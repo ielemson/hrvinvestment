@@ -42,14 +42,14 @@
                         <div class="mt-4">
                             <div class="d-flex justify-content-between mb-2">
                                 <span class="text-muted">Amount Requested</span>
-                                <strong>₦{{ number_format((float) $loan->amount_requested, 2) }}</strong>
+                                <strong>${{ number_format((float) $loan->amount_requested, 2) }}</strong>
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span class="text-muted">Amount Approved</span>
                                 <strong>
                                     @if ($loan->amount_approved)
-                                        ₦{{ number_format((float) $loan->amount_approved, 2) }}
+                                        ${{ number_format((float) $loan->amount_approved, 2) }}
                                     @else
                                         <span class="text-muted">—</span>
                                     @endif
@@ -134,8 +134,8 @@
                                         <tr>
                                             <td>{{ $repayment->installment_no }}</td>
                                             <td>{{ optional($repayment->due_date)->format('d M, Y') }}</td>
-                                            <td>₦{{ number_format((float) $repayment->amount_due, 2) }}</td>
-                                            <td>₦{{ number_format((float) $repayment->amount_paid, 2) }}</td>
+                                            <td>${{ number_format((float) $repayment->amount_due, 2) }}</td>
+                                            <td>${{ number_format((float) $repayment->amount_paid, 2) }}</td>
                                             <td><span
                                                     class="badge {{ $rb }}">{{ strtoupper($repayment->status) }}</span>
                                             </td>
@@ -178,7 +178,8 @@
                                 <div class="card card-statistics">
                                     <div class="card-body">
                                         <p class="text-muted mb-1">Overdue</p>
-                                        <h5 class="mb-0">{{ $loan->repayments->where('status', 'overdue')->count() }}</h5>
+                                        <h5 class="mb-0">{{ $loan->repayments->where('status', 'overdue')->count() }}
+                                        </h5>
                                     </div>
                                 </div>
                             </div>

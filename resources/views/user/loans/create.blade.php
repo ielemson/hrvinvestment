@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="content-wrapper">
-        @php $currencySymbol = $siteSettings->currency_symbol ?? '₦'; @endphp
+        @php $currencySymbol = $siteSettings->currency_symbol ?? '$'; @endphp
         @include('user.partials.kyc_notification')
 
         <div class="row">

@@ -43,7 +43,7 @@ class LoanStatusChanged extends Notification implements ShouldQueue
         }
 
         if ($this->newStatus === 'approved' && $this->loan->amount_approved) {
-            $mail->line('Approved Amount: ₦' . number_format((float)$this->loan->amount_approved, 2));
+            $mail->line('Approved Amount: $' . number_format((float)$this->loan->amount_approved, 2));
         }
 
         return $mail->action('View Dashboard', url('/dashboard'))

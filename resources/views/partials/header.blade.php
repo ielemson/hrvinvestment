@@ -1,12 +1,12 @@
       @php
           // DB: site_settings fields
-          $siteName = $siteSettings->site_name ?? config('app.name', 'HV Capitals');
+          $siteName = $siteSettings->site_name ?? config('app.name', 'Hello HV UK RF1 Investments');
 
-          $logo = $siteSettings->logo_path ?? 'assets/images/logo.png';
+          $logo = $siteSettings->logo_path ?? '';
           $logoMini = $siteSettings->logo_mini_path ?? $logo;
 
           $contactEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.com';
-          $contactPhone = $siteSettings->contact_phone ?? '+2348030001234';
+          $contactPhone = $siteSettings->contact_phone ?? '';
           $contactAddress = $siteSettings->contact_address ?? null;
       @endphp
 
