@@ -11,6 +11,7 @@ use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\KycController;
 use App\Http\Controllers\User\LoanKycController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\User\UserLoanController;
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminKycController;
@@ -99,10 +100,10 @@ Route::prefix('user')
         Route::patch('/profile/avatar', [ProfileController::class, 'avatar'])->name('profile.avatar');
 
         /** User Loans */
-        Route::get('/loans/view', [LoanController::class, 'index'])->name('loans.index');
-        Route::get('/loans/create', [LoanController::class, 'create'])->name('loans.create');
-        Route::post('/loans/store', [LoanController::class, 'store'])->name('loans.store');
-        Route::get('/loans/view/{loan}', [LoanController::class, 'show'])->name('loans.show');
+        Route::get('/loans/view', [UserLoanController::class, 'index'])->name('loans.index');
+        Route::get('/loans/create', [UserLoanController::class, 'create'])->name('loans.create');
+        Route::post('/loans/store', [UserLoanController::class, 'store'])->name('loans.store');
+        Route::get('/loans/view/{loan}', [UserLoanController::class, 'show'])->name('loans.show');
 
         /** Apply */
         Route::post('/apply', [LoanKycController::class, 'store'])->name('apply.store');
