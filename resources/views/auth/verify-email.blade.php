@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('partials.breadcrumb', ['header' => 'Verify Email - HV UK RF1 INVESTMENTS LTD'])
+    @include('partials.breadcrumb', ['header' => 'Verify'])
 
 
     @php
