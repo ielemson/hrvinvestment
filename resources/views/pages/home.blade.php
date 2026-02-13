@@ -216,56 +216,68 @@
 
             @php
                 $capitalTerms = [
-                    ['title' => 'Interest Rate', 'value' => '3% to 8%', 'icon' => 'trending_up'],
+                    ['title' => 'Interest Rate', 'value' => '3% to 8%', 'icon' => 'fa-solid fa-chart-line'],
                     [
                         'title' => 'Jurisdiction-Dependent Approval',
                         'value' => 'Global – Subject to Country Risk Assessment',
-                        'icon' => 'public',
+                        'icon' => 'fa-solid fa-globe',
                     ],
-                    ['title' => 'Repayment Horizon', 'value' => '2 to 20 years', 'icon' => 'schedule'],
+                    ['title' => 'Repayment Horizon', 'value' => '2 to 20 years', 'icon' => 'fa-regular fa-clock'],
                     [
                         'title' => 'Debt Service Coverage Ratio (DSCR)',
                         'value' => 'Minimum 1.2x to 1.5x',
-                        'icon' => 'assessment',
+                        'icon' => 'fa-solid fa-chart-column',
                     ],
                     [
                         'title' => 'Prepayment Flexibility',
                         'value' => 'Allowed with or without Penalty',
-                        'icon' => 'autorenew',
+                        'icon' => 'fa-solid fa-rotate',
                     ],
                     [
                         'title' => 'Investment Memorandum',
                         'value' => 'Feasibility Study, Business Plan',
-                        'icon' => 'description',
+                        'icon' => 'fa-regular fa-file-lines',
                     ],
                     [
                         'title' => 'Governing Law & Dispute Resolution',
                         'value' => 'New York Law / English Law',
-                        'icon' => 'gavel',
+                        'icon' => 'fa-solid fa-scale-balanced',
                     ],
                     [
                         'title' => 'Capital Commitment Range',
                         'value' => 'Minimum $1M – Maximum $900M',
-                        'icon' => 'account_balance',
+                        'icon' => 'fa-solid fa-building-columns',
                     ],
                     [
                         'title' => 'Financial Structuring Options',
                         'value' => 'Debt Financing / Equity / Corporate Loan / Joint Venture / etc.',
-                        'icon' => 'tune',
+                        'icon' => 'fa-solid fa-sliders',
                     ],
-                    ['title' => 'Denomination Options', 'value' => 'USD / EUR / GBP / Other', 'icon' => 'payments'],
+                    [
+                        'title' => 'Denomination Options',
+                        'value' => 'USD / EUR / GBP / Other',
+                        'icon' => 'fa-solid fa-coins',
+                    ],
                     [
                         'title' => 'Repayment Schedule',
                         'value' => 'Equal Installments / Balloon Payment',
-                        'icon' => 'calendar_month',
+                        'icon' => 'fa-regular fa-calendar-days',
                     ],
                     [
                         'title' => 'Guarantee Structure',
                         'value' => 'Project Assets, Revenue Pledge',
-                        'icon' => 'verified_user',
+                        'icon' => 'fa-solid fa-user-shield',
                     ],
-                    ['title' => 'Loan-to-Value (LTV)', 'value' => 'Typically 70:30 or 80:20', 'icon' => 'pie_chart'],
-                    ['title' => 'Capital Deployment Plan', 'value' => 'Lump Sum / Tranches', 'icon' => 'call_split'],
+                    [
+                        'title' => 'Loan-to-Value (LTV)',
+                        'value' => 'Typically 70:30 or 80:20',
+                        'icon' => 'fa-solid fa-chart-pie',
+                    ],
+                    [
+                        'title' => 'Capital Deployment Plan',
+                        'value' => 'Lump Sum / Tranches',
+                        'icon' => 'fa-solid fa-code-branch',
+                    ],
                 ];
             @endphp
 
@@ -275,6 +287,7 @@
                     <div class="col-12 col-sm-6 col-lg-6">
                         <div class="block-vacancy block-vacancy--compact block-vacancy--badge h-100"
                             style="
+                            position: relative;
                             background: #fff;
                             border: 1px solid rgba(0,0,0,.06);
                             border-radius: 14px;
@@ -307,12 +320,8 @@
 
                             {{-- Icon + Title --}}
                             <div class="d-flex align-items-start mb-2" style="gap: 12px;">
-                                <span class="icon novi-icon icon-primary material-icons-{{ $term['icon'] }}"
-                                    style="
-                                    font-size: 26px;
-                                    line-height: 1;
-                                    margin-top: 2px;
-                                ">
+                                <span style="font-size: 22px; line-height: 1; margin-top: 2px;">
+                                    <i class="{{ $term['icon'] }}"></i>
                                 </span>
 
                                 <div>
@@ -357,7 +366,7 @@
             <div class="mt-4 mt-md-5">
                 <a href="{{ $mailto }}" class="btn btn-primary btn-lg"
                     style="border-radius: 999px; padding: 12px 22px; box-shadow: 0 10px 25px rgba(0,0,0,.12);">
-                    <span class="icon novi-icon icon-primary material-icons-mail_outline mr-2"></span>
+                    <i class="fa-regular fa-envelope mr-2"></i>
                     Email Us to Discuss Terms
                 </a>
                 <div class="small text-muted mt-2">
