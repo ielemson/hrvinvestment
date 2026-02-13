@@ -19487,3 +19487,68 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 		padding: 18px 20px;
 	}
 }
+
+  /* Custom Bootstrap 4 Alert Redesign */
+
+        .custom-alert {
+            border: none;
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+            background: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        /* Left Accent Bar */
+        .custom-alert::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            border-radius: 8px 0 0 8px;
+        }
+
+        /* Success */
+        .custom-alert-success {
+            color: #155724;
+            background-color: #f0fdf4;
+        }
+
+        .custom-alert-success::before {
+            background-color: #28a745;
+        }
+
+        /* Danger */
+        .custom-alert-danger {
+            color: #721c24;
+            background-color: #fef2f2;
+        }
+
+        .custom-alert-danger::before {
+            background-color: #dc3545;
+        }
+
+        /* Warning */
+        .custom-alert-warning {
+            color: #856404;
+            background-color: #fffbea;
+        }
+
+        .custom-alert-warning::before {
+            background-color: #ffc107;
+        }
+
+        /* Info */
+        .custom-alert-info {
+            color: #0c5460;
+            background-color: #f0f9ff;
+        }
+
+        .custom-alert-info::before {
+            background-color: #17a2b8;
+        }

@@ -1,19 +1,21 @@
 @extends('layouts.app')
 
-
 @section('content')
     @include('partials.breadcrumb', ['header' => 'Contact Us'])
     <!-- Get in Touch-->
     <section class="section section-lg bg-default novi-background">
+
         <div class="container">
             <div class="layout-bordered">
                 <div class="layout-bordered__main text-center">
+                    @include('partials.alerts')
                     <div class="layout-bordered__main-inner">
                         <h3>Get in Touch</h3>
                         <p>We are available 24/7 by fax, e-mail or by phone. You can also use our quick contact form to ask
                             a
                             question about our services and projects.</p>
                         <!-- RD Mailform-->
+
                         <form method="POST" action="{{ route('contact.send') }}" class="rd-form" id="contactForm"
                             data-parsley-validate novalidate>
                             @csrf
@@ -159,7 +161,6 @@
         </div>
     </section>
 @endsection
-
 @pushOnce('scripts')
     <!-- Parsley (non-AJAX validation only) -->
     <script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>

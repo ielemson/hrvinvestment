@@ -42,7 +42,7 @@ Route::controller(FrontPagesController::class)->group(function () {
 });
 
 /** Single contact POST (remove duplicates) */
-Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.send');
 
 /*
 |--------------------------------------------------------------------------
