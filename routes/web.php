@@ -82,7 +82,7 @@ Route::middleware(['auth'])->group(function () {
 */
 Route::prefix('user')
     ->name('user.')
-    ->middleware(['auth', 'verified', 'role:user'])
+    ->middleware(['auth', 'verified'])
     ->group(function () {
 
         Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
@@ -107,6 +107,9 @@ Route::prefix('user')
         /** Apply */
         Route::post('/apply', [LoanKycController::class, 'store'])->name('apply.store');
     });
+
+
+
 
 /*
 |--------------------------------------------------------------------------
