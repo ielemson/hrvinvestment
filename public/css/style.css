@@ -19552,3 +19552,32 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
         .custom-alert-info::before {
             background-color: #17a2b8;
         }
+
+
+		/* Navbar Logo Responsive Control */
+
+.rd-navbar-brand .brand {
+    display: flex;
+    align-items: center;
+}
+
+.rd-navbar-brand .brand-logo {
+    max-height: 50px;   /* controls navbar height */
+    height: auto;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* Smaller screens */
+@media (max-width: 768px) {
+    .rd-navbar-brand .brand-logo {
+        max-height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .rd-navbar-brand .brand-logo {
+        max-height: 34px;
+    }
+}

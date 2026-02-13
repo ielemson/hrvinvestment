@@ -81,12 +81,14 @@
 
                               <div class="rd-navbar-brand">
                                   <a class="brand" href="{{ route('home') }}" aria-label="Home">
-                                      <img class="brand-logo-dark" src="{{ asset($logo) }}" alt="Nordan Industries"
-                                          width="141" height="46" srcset="{{ asset($logo) }} 2x" />
-                                      <img class="brand-logo-light" src="{{ asset($logo) }}" alt="Nordan Industries"
-                                          width="141" height="46" srcset="{{ asset($logo) }} 2x" />
+                                      <img class="brand-logo brand-logo-dark" src="{{ asset($logo) }}"
+                                          alt="HV RF Investments" />
+
+                                      <img class="brand-logo brand-logo-light" src="{{ asset($logo) }}"
+                                          alt="HV RF Investments" />
                                   </a>
                               </div>
+
                           </div>
 
                           <!-- Nav -->
