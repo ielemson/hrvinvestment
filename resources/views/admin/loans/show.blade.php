@@ -17,7 +17,7 @@
                                 // Applicant avatar
                                 $avatarUrl = $loan->user->avatar
                                     ? asset('storage/' . $loan->user->avatar)
-                                    : asset('admin/images/faces/face1.jpg');
+                                    : asset('admin/images/faces/user.png');
 
                                 // Status badge config
                                 $statusConfig = [

@@ -11,7 +11,7 @@
                     <div class="card-body text-center">
                         <div class="mb-3">
                             <img class="img-lg rounded-circle"
-                                src="{{ $user->profile_photo_url ?? asset('assets/images/faces/face1.jpg') }}" alt="profile">
+                                src="{{ $user->profile_photo_url ?? asset('assets/images/faces/user.png') }}" alt="profile">
                         </div>
 
                         <h4 class="mb-1">{{ $user->name }}</h4>

@@ -99,10 +99,10 @@ Route::prefix('user')
         Route::patch('/profile/avatar', [ProfileController::class, 'avatar'])->name('profile.avatar');
 
         /** User Loans */
-        Route::get('/loans', [LoanController::class, 'index'])->name('loans.index');
+        Route::get('/loans/view', [LoanController::class, 'index'])->name('loans.index');
         Route::get('/loans/create', [LoanController::class, 'create'])->name('loans.create');
-        Route::post('/loans', [LoanController::class, 'store'])->name('loans.store');
-        Route::get('/loans/{loan}', [LoanController::class, 'show'])->name('loans.show');
+        Route::post('/loans/store', [LoanController::class, 'store'])->name('loans.store');
+        Route::get('/loans/view/{loan}', [LoanController::class, 'show'])->name('loans.show');
 
         /** Apply */
         Route::post('/apply', [LoanKycController::class, 'store'])->name('apply.store');

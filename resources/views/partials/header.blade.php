@@ -79,20 +79,6 @@
                                   <span></span>
                               </button>
 
-                              <!-- Brand (dynamic from site_settings) -->
-                              {{-- <div class="rd-navbar-brand">
-                                  <a class="brand" href="{{ route('home') }}" aria-label="{{ $siteName }} Home">
-                                   
-                                      <img class="brand-logo-dark" src="{{ asset($logo) }}" alt="{{ $siteName }}"
-                                          width="171" height="39" loading="lazy"
-                                          srcset="{{ asset($logo) }} 2x" />
-
-                                      
-                                      <img class="brand-logo-light" src="{{ asset($logoMini) }}"
-                                          alt="{{ $siteName }}" width="171" height="39" loading="lazy"
-                                          srcset="{{ asset($logoMini) }} 2x" />
-                                  </a>
-                              </div> --}}
                               <div class="rd-navbar-brand">
                                   <a class="brand" href="{{ route('home') }}" aria-label="Home">
                                       <img class="brand-logo-dark" src="{{ asset($logo) }}" alt="Nordan Industries"

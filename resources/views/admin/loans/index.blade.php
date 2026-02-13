@@ -132,7 +132,7 @@
                                                         @php
                                                             $avatarUrl = $loan->user->avatar
                                                                 ? asset('storage/' . $loan->user->avatar)
-                                                                : asset('admin/images/faces/face1.jpg');
+                                                                : asset('admin/images/faces/user.png');
                                                         @endphp
                                                         <img src="{{ $avatarUrl }}"
                                                             class="rounded-circle shadow-sm border border-light"

@@ -56,7 +56,7 @@
 
                         $avatarUrl = $user->avatar
                             ? asset('storage/' . $user->avatar)
-                            : asset('admin/images/faces/face1.jpg');
+                            : asset('admin/images/faces/user.png');
                     @endphp
 
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">

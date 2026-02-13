@@ -3,7 +3,7 @@
 
     $user = auth()->user();
 
-    $avatarUrl = $user->avatar ? asset('storage/' . $user->avatar) : asset('admin/images/faces/face1.jpg');
+    $avatarUrl = $user->avatar ? asset('storage/' . $user->avatar) : asset('admin/images/faces/user.png');
 @endphp
 
 <nav class="navbar horizontal-layout col-lg-12 col-12 p-0">

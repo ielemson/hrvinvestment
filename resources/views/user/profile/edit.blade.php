@@ -11,7 +11,7 @@
         @php
             $user = auth()->user();
 
-            $avatarUrl = $user->avatar ? asset('storage/' . $user->avatar) : asset('admin/images/faces/face1.jpg');
+            $avatarUrl = $user->avatar ? asset('storage/' . $user->avatar) : asset('admin/images/faces/user.png');
 
             $kycStatus = optional($user->kyc)->status ?? 'pending';
         @endphp
@@ -66,11 +66,11 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#preferences" role="tab">
                                     <i class="mdi mdi-tune mr-1"></i> Preferences
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
 
                         <div class="tab-content pt-4">
@@ -154,7 +154,7 @@
                                         <label>Phone Number</label>
                                         <input type="text" class="form-control @error('phone') is-invalid @enderror"
                                             name="phone" value="{{ old('phone', $user->phone) }}"
-                                            placeholder="+2348012345678">
+                                            placeholder="phone number">
                                         @error('phone')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
