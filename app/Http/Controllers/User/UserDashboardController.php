@@ -105,13 +105,43 @@ class UserDashboardController extends Controller
                 $status = $levelRow?->status ?? 'under_review';
                 $isActive = ($loan->current_level ?? null) === $key;
 
-                $workflowUI[] = [
-                    'key'       => $key,
-                    'label'     => $label,
-                    'status'    => $status,
-                    'is_active' => $isActive,
-                    'can_open'  => $isActive, // user can only open current level
-                ];
+                // $workflowUI[] = [
+                //     'key'       => $key,
+                //     'label'     => $label,
+                //     'status'    => $status,
+                //     'is_active' => $isActive,
+                //     'can_open'  => $isActive, // user can only open current level
+                // ];
+
+                $workflowUI = [];
+
+                if ($loan) {
+                    $loan->load('workflowLevels');
+
+                    $levels = \App\Models\Loan::WORKFLOW_LEVELS; // key => label (7 items)
+
+                    // % mapping by index (must match the order of WORKFLOW_LEVELS)
+                    $percentSteps = [10, 20, 30, 40, 50, 80, 100];
+
+                    $i = 0;
+                    foreach ($levels as $key => $label) {
+                        $levelRow = $loan->workflowLevels->firstWhere('level_key', $key);
+
+                        $status = $levelRow?->status ?? 'under_review';
+                        $isActive = ($loan->current_level ?? null) === $key;
+
+                        $workflowUI[] = [
+                            'key'       => $key,
+                            'label'     => $label,
+                            'percent'   => $percentSteps[$i] ?? null, // ✅ added
+                            'status'    => $status,
+                            'is_active' => $isActive,
+                            'can_open'  => $isActive,
+                        ];
+
+                        $i++;
+                    }
+                }
             }
         }
 

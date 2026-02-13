@@ -139,49 +139,44 @@
                             <div class="col-md-4">
                                 <p class="category-heading">Apply & Manage</p>
                                 <ul class="submenu-item">
-                                    <li><a class="nav-link" href="{{ route('user.loans.create') }}">Apply for Loan</a>
-                                    </li>
-                                    <li><a class="nav-link" href="{{ route('user.loans.index') }}">My Loans</a></li>
-                                    <li>
-                                        <a class="nav-link"
-                                            href="{{ route('user.loans.index', ['status' => 'active']) }}">
-                                            Active Loan
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link"
-                                            href="{{ route('user.loans.index', ['status' => 'completed']) }}">
-                                            Loan History
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                                    {{-- <li><a class="nav-link" href="{{ route('user.loans.create') }}">Apply for Loan</a> --}}
+                </li>
+                <li><a class="nav-link" href="{{ route('user.loans.index') }}">My Loans</a></li>
+                <li>
+                    <a class="nav-link" href="{{ route('user.loans.index', ['status' => 'active']) }}">
+                        Active Loan
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ route('user.loans.index', ['status' => 'completed']) }}">
+                        Loan History
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-                            <div class="col-md-4">
-                                <p class="category-heading">Status Tracking</p>
-                                <ul class="submenu-item">
-                                    <li>
-                                        <a class="nav-link"
-                                            href="{{ route('user.loans.index', ['status' => 'under_review']) }}">
-                                            Under Review
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link"
-                                            href="{{ route('user.loans.index', ['status' => 'approved']) }}">
-                                            Approved
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link"
-                                            href="{{ route('user.loans.index', ['status' => 'disbursed']) }}">
-                                            Disbursement
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+        <div class="col-md-4">
+            <p class="category-heading">Status Tracking</p>
+            <ul class="submenu-item">
+                <li>
+                    <a class="nav-link" href="{{ route('user.loans.index', ['status' => 'under_review']) }}">
+                        Under Review
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ route('user.loans.index', ['status' => 'approved']) }}">
+                        Approved
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ route('user.loans.index', ['status' => 'disbursed']) }}">
+                        Disbursement
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-                            <div class="col-md-4">
+        {{-- <div class="col-md-4">
                                 <p class="category-heading">Offers</p>
                                 <ul class="submenu-item">
                                     <li><a class="nav-link" href="{{ route('user.dashboard') }}#loan-limit">My Loan
@@ -191,14 +186,14 @@
                                     <li><a class="nav-link"
                                             href="{{ route('user.dashboard') }}#eligibility">Eligibility Tips</a></li>
                                 </ul>
-                            </div>
+                            </div> --}}
 
-                        </div>
-                    </div>
-                </li>
+    </div>
+    </div>
+    </li>
 
-                {{-- Repayments --}}
-                <li class="nav-item mega-menu {{ request()->routeIs('repayments.*') ? 'active' : '' }}">
+    {{-- Repayments --}}
+    {{-- <li class="nav-item mega-menu {{ request()->routeIs('repayments.*') ? 'active' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="mdi mdi-calendar-clock link-icon"></i>
                         <span class="menu-title">Repayments</span>
@@ -233,17 +228,17 @@
                             </div>
                         </div>
                     </div>
-                </li>
+                </li> --}}
 
-                {{-- Settings --}}
-                <li class="nav-item {{ request()->routeIs('user.profile.*') ? 'active' : '' }}">
-                    <a href="{{ route('user.profile.edit') }}" class="nav-link">
-                        <i class="mdi mdi-settings-outline link-icon"></i>
-                        <span class="menu-title">Settings</span>
-                    </a>
-                </li>
+    {{-- Settings --}}
+    <li class="nav-item {{ request()->routeIs('user.profile.*') ? 'active' : '' }}">
+        <a href="{{ route('user.profile.edit') }}" class="nav-link">
+            <i class="mdi mdi-settings-outline link-icon"></i>
+            <span class="menu-title">Settings</span>
+        </a>
+    </li>
 
-            </ul>
-        </div>
+    </ul>
+    </div>
     </div>
 </nav>

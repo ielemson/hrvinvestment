@@ -6,7 +6,7 @@
 
     @php
 
-        $contactEmail = $siteSettings->contact_email ?? 'info@hvcapitals.com';
+        $contactEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.com';
         $contactPhone = $siteSettings->contact_phone ?? '+2348030001234';
         $logo = $siteSettings->logo_path ?? 'assets/images/logo.png';
 

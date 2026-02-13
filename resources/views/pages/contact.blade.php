@@ -14,7 +14,7 @@
                             a
                             question about our services and projects.</p>
                         <!-- RD Mailform-->
-                        <form method="POST" action="{{ route('contact.submit') }}" class="rd-form" id="contactForm"
+                        <form method="POST" action="{{ route('contact.send') }}" class="rd-form" id="contactForm"
                             data-parsley-validate novalidate>
                             @csrf
 
@@ -122,7 +122,7 @@
                     $logo = $siteSettings->logo_path ?? 'assets/images/logo.png';
                     $logoMini = $siteSettings->logo_mini_path ?? $logo;
 
-                    $contactEmail = $siteSettings->contact_email ?? 'info@hvcapitals.com';
+                    $contactEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.com';
                     $contactPhone = $siteSettings->contact_phone ?? '+2348030001234';
                     $contactAddress = $siteSettings->contact_address ?? null;
 

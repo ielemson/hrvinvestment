@@ -6,8 +6,8 @@
         {{-- @include('user.partials.kyc_notification') --}}
         @include('user.partials.alerts')
         <!-- =====================
-                                                                                SUMMARY CARDS
-                                                                                ====================== -->
+                                                                                                    SUMMARY CARDS
+                                                                                                    ====================== -->
         @php
             // DB: site_settings fields
 
@@ -134,10 +134,10 @@
         </div>
 
         <!-- =====================
-                                                LOAN PROGRESS + KYC
-                                                ====================== -->
+            LOAN PROGRESS + KYC
+            ====================== -->
         <div class="row">
-            <div class="col-md-6 grid-margin stretch-card">
+            <div class="col-md-12 grid-margin stretch-card mx-auto">
                 <div class="card shadow-sm h-100">
                     <div class="card-body">
                         {{-- Header --}}
@@ -217,9 +217,15 @@
                                                     {{-- RIGHT: CONTENT --}}
                                                     <div class="loan-timeline__content">
                                                         <div class="loan-timeline__top">
-                                                            <div class="loan-timeline__title">
-                                                                {{ $item['label'] }}
+                                                            <div class="loan-timeline__title d-flex align-items-center">
+                                                                <span>{{ $item['label'] }}</span>
+
+                                                                @if (!is_null($item['percent'] ?? null))
+                                                                    <span
+                                                                        class="loan-timeline__pct ml-2">{{ $item['percent'] }}%</span>
+                                                                @endif
                                                             </div>
+
 
                                                             <span class="badge badge-{{ $badge }} badge-pill">
                                                                 {{ ucwords(str_replace('_', ' ', $status)) }}
@@ -267,100 +273,11 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-6 grid-margin stretch-card">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body">
-                        {{-- Header --}}
-                        <div class="d-flex align-items-center mb-4 pb-2 border-bottom">
-                            <div class="status-icon mr-3">
-                                <i
-                                    class="mdi mdi-account-check-outline mdi-3x {{ $kycApproved ? 'text-success' : 'text-warning' }}"></i>
-                            </div>
-                            <div>
-                                <h5 class="card-title mb-1">KYC Verification</h5>
-                                <small class="text-muted">Identity confirmation status</small>
-                            </div>
-                        </div>
-
-                        {{-- Status Badge --}}
-                        <div class="status-badge mb-4">
-                            <span class="badge badge-{{ $current['badge'] }} px-4 py-2 font-weight-normal">
-                                <i class="mdi mdi-{{ $kycApproved ? 'check-circle' : 'clock-outline' }} mr-2"></i>
-                                {{ $current['label'] }}
-                            </span>
-                        </div>
-
-                        {{-- Status Message --}}
-                        <div class="status-message mb-4">
-                            <p class="text-muted mb-3">{{ $current['message'] }}</p>
-
-                            @if ($kyc && in_array($kycStatus, ['under_review', 'rejected']))
-                                <small class="text-muted">
-                                    <i class="mdi mdi-calendar-clock mr-1"></i>
-                                    Updated: {{ $kyc->updated_at?->format('M d, Y') ?? 'Never' }}
-                                </small>
-                            @endif
-                        </div>
-
-                        {{-- Recommended: Visual Progress (No Text Problems) --}}
-                        <div class="progress-container mb-4">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <small class="text-muted">
-                                    <i class="mdi mdi-account-check-outline mr-1"></i>Verification Progress
-                                </small>
-                                <span class="badge badge-sucess px-2">
-                                    {{ $kycApproved ? '100%' : '65%' }}
-                                    <i class="mdi mdi-{{ $kycApproved ? 'check' : 'clock' }} ml-1"></i>
-                                </span>
-                            </div>
-                            <div class="progress rounded-pill" style="height: 10px;">
-                                <div class="progress-bar {{ $kycApproved ? 'bg-success' : 'bg-warning' }} progress-bar-animated rounded-pill"
-                                    role="progressbar" style="width: {{ $kycApproved ? '100%' : '65%' }}">
-                                </div>
-                            </div>
-                            <div class="progress-steps mt-3">
-                                <div class="step small {{ !$kycApproved ? 'active' : 'completed' }}">
-                                    <i class="mdi mdi-file-upload-outline"></i> Documents
-                                </div>
-                                <div class="step small {{ $kycApproved ? 'completed' : 'active' }}">
-                                    <i class="mdi mdi-account-check"></i> Review
-                                </div>
-                                <div class="step small {{ $kycApproved ? 'completed' : '' }}">
-                                    <i class="mdi mdi-check-circle"></i> Verified
-                                </div>
-                            </div>
-                        </div>
-
-
-                        {{-- Action --}}
-                        @if ($current['cta'])
-                            <a href="{{ route('user.loans.create') }}"
-                                class="btn btn-{{ $kycStatus === 'rejected' ? 'danger' : 'primary' }} btn-block btn-lg">
-                                <i class="mdi mdi-{{ $kycStatus === 'rejected' ? 'redo' : 'upload' }} mr-2"></i>
-                                {{ $current['cta'] }}
-                            </a>
-                        @elseif(!$kycApproved)
-                            <div class="alert alert-info border-0">
-                                <i class="mdi mdi-lightbulb-outline mr-2"></i>
-                                Complete KYC to unlock higher loan limits
-                            </div>
-                        @else
-                            <div class="text-center py-3 bg-success text-white rounded p-3">
-                                <i class="mdi mdi-check-circle mdi-2x mb-2 d-block"></i>
-                                <small>Ready for loans!</small>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-
         </div>
 
         <!-- =====================
-                                                                   LOAN HISTORY
-                                                       ====================== -->
+                                                                                       LOAN HISTORY
+                                                                           ====================== -->
         <div class="row">
             <div class="col-12 grid-margin">
                 <div class="card">
@@ -443,8 +360,8 @@
                 </div>
             </div>
             <!-- =====================
-                                                                                                                            REPAYMENT HISTORY
-                                                                                                   ====================== -->
+                                                                                                                                                                    REPAYMENT HISTORY
+                                                                                                                                           ====================== -->
             <div class="row">
                 <div class="col-12 grid-margin">
                     <div class="card">
@@ -494,8 +411,8 @@
 
 
             <!-- =====================
-                                                                                                                                    NOTIFICATIONS
-                                                                                                                                    ====================== -->
+                                                                                                                                                                            NOTIFICATIONS
+                                                                                                                                                                            ====================== -->
             {{-- <div class="row">
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card">

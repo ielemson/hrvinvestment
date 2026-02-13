@@ -113,7 +113,7 @@
                     $logo = $siteSettings->logo_path ?? 'assets/images/logo.png';
                     $logoMini = $siteSettings->logo_mini_path ?? $logo;
 
-                    $contactEmail = $siteSettings->contact_email ?? 'info@hvcapitals.com';
+                    $contactEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.com';
                     $contactPhone = $siteSettings->contact_phone ?? '+2348030001234';
                     $contactAddress = $siteSettings->contact_address ?? null;
                 @endphp

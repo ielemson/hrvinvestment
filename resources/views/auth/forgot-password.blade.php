@@ -61,7 +61,7 @@
                 </div>
                 @php
 
-                    $contactEmail = $siteSettings->contact_email ?? 'info@hvcapitals.com';
+                    $contactEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.com';
 
                 @endphp
                 <!-- ASIDE: Help + Trust (unchanged, reused) -->

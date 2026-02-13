@@ -8,6 +8,13 @@
     $borderSoft = '#E5E7EB';
     $textDark = '#0F172A';
     $textMuted = '#6B7280';
+
+    // Branding
+    $appName = $appName ?? config('app.name', 'HV RF Investments');
+
+    // Build PUBLIC logo url for email
+    $logoPath = $siteSettings->logo_path ?? null;
+    $logoUrl = $logoPath ? 'https://www.hvrfinvestments.com/' . ltrim($logoPath, '/') : null;
 @endphp
 
 <!DOCTYPE html>
@@ -21,26 +28,51 @@
 
 <body style="margin:0; padding:0; background: {{ $pageBg }}; font-family: Arial, Helvetica, sans-serif;">
 
-    <!-- Outer wrapper -->
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0"
         style="background: {{ $pageBg }}; padding: 32px 12px;">
         <tr>
             <td align="center">
 
-                <!-- Main container -->
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0"
                     style="max-width: 640px; border-collapse: collapse;">
 
-                    <!-- Top brand bar -->
+                    {{-- Top brand bar (LOGO + NAME) --}}
                     <tr>
                         <td style="padding-bottom: 10px;">
                             <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
                                 <tr>
-                                    <td align="left"
-                                        style="font-size: 18px; font-weight: 700; color: {{ $brandDark }};">
-                                        {{ $appName }}
+                                    <td align="left" style="vertical-align: middle;">
+                                        <table role="presentation" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                @if ($logoUrl)
+                                                    <td style="vertical-align: middle; padding-right: 10px;">
+                                                        <img src="{{ $logoUrl }}" alt="{{ $appName }}"
+                                                            width="38" height="38"
+                                                            style="
+                                                            display:block;
+                                                            border-radius:10px;
+                                                            max-width:38px;
+                                                            max-height:38px;
+                                                         ">
+                                                    </td>
+                                                @endif
+
+                                                <td style="vertical-align: middle;">
+                                                    <div
+                                                        style="font-size: 18px; font-weight: 700; color: {{ $brandDark }};">
+                                                        {{ $appName }}
+                                                    </div>
+                                                    <div
+                                                        style="font-size: 11px; color: {{ $textMuted }}; margin-top: 2px;">
+                                                        Secure account verification
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
-                                    <td align="right" style="font-size: 11px; color: {{ $textMuted }};">
+
+                                    <td align="right"
+                                        style="vertical-align: middle; font-size: 11px; color: {{ $textMuted }};">
                                         Account security
                                     </td>
                                 </tr>
@@ -48,33 +80,29 @@
                         </td>
                     </tr>
 
-                    <!-- Card -->
+                    {{-- Card --}}
                     <tr>
                         <td
                             style="
-                            background: {{ $cardBg }};
-                            border-radius: 16px;
-                            border: 1px solid {{ $borderSoft }};
-                            box-shadow: 0 12px 30px rgba(15,23,42,0.08);
-                        ">
-                            <!-- Card inner padding -->
+                        background: {{ $cardBg }};
+                        border-radius: 16px;
+                        border: 1px solid {{ $borderSoft }};
+                        box-shadow: 0 12px 30px rgba(15,23,42,0.08);
+                    ">
                             <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
                                 <tr>
                                     <td style="padding: 24px 24px 22px;">
 
-                                        <!-- Small label -->
                                         <div
                                             style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: {{ $brandPrimary }}; font-weight: 600;">
                                             Verify your email
                                         </div>
 
-                                        <!-- Main heading -->
                                         <div
                                             style="margin-top: 6px; font-size: 20px; font-weight: 700; color: {{ $textDark }}; line-height: 1.4;">
                                             Confirm your email to finish setting up your account.
                                         </div>
 
-                                        <!-- Body copy -->
                                         <div
                                             style="margin-top: 12px; font-size: 14px; line-height: 1.7; color: {{ $textMuted }};">
                                             Hello{{ isset($user->name) ? ' ' . e($user->name) : '' }},
@@ -86,34 +114,32 @@
                                             account.
                                         </div>
 
-                                        <!-- CTA -->
                                         <table role="presentation" cellspacing="0" cellpadding="0"
                                             style="margin-top: 20px;">
                                             <tr>
                                                 <td
                                                     style="
-                                                    border-radius: 999px;
-                                                    background: linear-gradient(135deg, {{ $brandPrimary }} 0%, {{ $brandPrimaryAlt }} 100%);
-                                                ">
+                                                border-radius: 999px;
+                                                background: linear-gradient(135deg, {{ $brandPrimary }} 0%, {{ $brandPrimaryAlt }} 100%);
+                                            ">
                                                     <a href="{{ $verifyUrl }}"
                                                         style="
-                                                            display:inline-block;
-                                                            padding: 12px 28px;
-                                                            font-size: 14px;
-                                                            font-weight: 700;
-                                                            letter-spacing: 0.04em;
-                                                            text-transform: uppercase;
-                                                            color:#FFFFFF;
-                                                            text-decoration:none;
-                                                            border-radius:999px;
-                                                       ">
+                                                    display:inline-block;
+                                                    padding: 12px 28px;
+                                                    font-size: 14px;
+                                                    font-weight: 700;
+                                                    letter-spacing: 0.04em;
+                                                    text-transform: uppercase;
+                                                    color:#FFFFFF;
+                                                    text-decoration:none;
+                                                    border-radius:999px;
+                                                ">
                                                         Verify email
                                                     </a>
                                                 </td>
                                             </tr>
                                         </table>
 
-                                        <!-- Meta line -->
                                         <div
                                             style="margin-top: 14px; font-size: 12px; line-height: 1.7; color: {{ $textMuted }};">
                                             This link will expire in
@@ -123,11 +149,9 @@
                                             If you didn’t try to sign up, you can safely ignore this message.
                                         </div>
 
-                                        <!-- Divider -->
                                         <div style="margin-top: 18px; border-top: 1px solid {{ $borderSoft }};">
                                         </div>
 
-                                        <!-- Fallback URL -->
                                         <div style="margin-top: 16px;">
                                             <div
                                                 style="font-size: 12px; color: {{ $textMuted }}; margin-bottom: 6px;">
@@ -136,19 +160,18 @@
                                             </div>
                                             <div
                                                 style="
-                                                font-size: 12px;
-                                                word-break: break-all;
-                                                color: {{ $brandPrimary }};
-                                                padding: 10px 12px;
-                                                border-radius: 10px;
-                                                background: #F9FAFB;
-                                                border: 1px solid {{ $borderSoft }};
-                                            ">
+                                            font-size: 12px;
+                                            word-break: break-all;
+                                            color: {{ $brandPrimary }};
+                                            padding: 10px 12px;
+                                            border-radius: 10px;
+                                            background: #F9FAFB;
+                                            border: 1px solid {{ $borderSoft }};
+                                        ">
                                                 {{ $verifyUrl }}
                                             </div>
                                         </div>
 
-                                        <!-- Support hint -->
                                         <div style="margin-top: 16px; font-size: 12px; color: {{ $textMuted }};">
                                             Need help? Reply to this email and the support team will assist you.
                                         </div>
@@ -159,7 +182,7 @@
                         </td>
                     </tr>
 
-                    <!-- Footer note -->
+                    {{-- Footer note --}}
                     <tr>
                         <td
                             style="padding-top: 14px; font-size: 11px; color: {{ $textMuted }}; text-align: center;">

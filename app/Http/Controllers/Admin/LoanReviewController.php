@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Loan;
 use App\Notifications\LoanStatusChanged;
 use Illuminate\Http\Request;
+use App\Mail\LoanWorkflowUpdatedMail;
 use Illuminate\Support\Facades\Auth;
 
 class LoanReviewController extends Controller
@@ -182,30 +183,45 @@ class LoanReviewController extends Controller
         );
     }
 
+
+
     public function updateWorkflow(Request $request, Loan $loan)
     {
-
         $data = $request->validate([
-            'level_key' => 'required|in:' . implode(',', array_keys(\App\Models\Loan::WORKFLOW_LEVELS)),
-            'status' => 'required|in:under_review,reviewed,approved',
-            'set_as_current' => 'nullable|boolean',
-            'notes' => 'nullable|string',
+            'level_key'       => 'required|in:' . implode(',', array_keys(\App\Models\Loan::WORKFLOW_LEVELS)),
+            'status'          => 'required|in:under_review,reviewed,approved',
+            'set_as_current'  => 'nullable|boolean',
+            'notes'           => 'nullable|string',
         ]);
 
-        $level = $loan->workflowLevels()->where('level_key', $data['level_key'])->firstOrFail();
+        $level = $loan->workflowLevels()
+            ->where('level_key', $data['level_key'])
+            ->firstOrFail();
 
         $level->update([
-            'status' => $data['status'],
-            'notes' => $data['notes'] ?? null,
+            'status'    => $data['status'],
+            'notes'     => $data['notes'] ?? null,
             'edited_by' => auth()->id(),
             'edited_at' => now(),
         ]);
 
         if (!empty($data['set_as_current'])) {
             $loan->update([
-                'current_level' => $data['level_key'],
+                'current_level'        => $data['level_key'],
                 'current_level_status' => $data['status'],
             ]);
+        }
+
+        // ✅ Send email to user (keep your existing notifications unchanged)
+        if ($loan->user && $loan->user->email) {
+            \Mail::to($loan->user->email)->send(
+                new \App\Mail\LoanWorkflowUpdatedMail(
+                    loan: $loan,
+                    levelKey: $data['level_key'],
+                    status: $data['status'],
+                    notes: $data['notes'] ?? null
+                )
+            );
         }
 
         return back()->with('success', 'Workflow updated.');

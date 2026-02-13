@@ -171,7 +171,7 @@ class LoanKycController extends Controller
             });
 
             return redirect()
-                ->route('user.loans.index')
+                ->route("user.dashboard")
                 ->with('success', 'KYC + Loan application submitted successfully and is under review.');
         } catch (\Throwable $e) {
             Log::error('KYC+Loan submission failed: ' . $e->getMessage(), [
