@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('partials.breadcrumb', ['header' => 'Verify Email - HV Capitals'])
+    @include('partials.breadcrumb', ['header' => 'Verify Email - HV UK RF1 INVESTMENTS LTD'])
 
 
     @php
 
         $contactEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.com';
-        $contactPhone = $siteSettings->contact_phone ?? '+2348030001234';
-        $logo = $siteSettings->logo_path ?? 'assets/images/logo.png';
+        $contactPhone = $siteSettings->contact_phone ?? '';
+        $logo = $siteSettings->logo_path ?? '';
 
     @endphp
 

@@ -9,8 +9,8 @@
 
                 @php
                     $contactEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.com';
-                    $siteName = $siteSettings->site_name ?? config('app.name', 'HV Capitals');
-                    $logo = $siteSettings->logo_path ?? 'assets/images/logo.png';
+                    $siteName = $siteSettings->site_name ?? config('app.name', 'HV UK RF1 INVESTMENTS LTD');
+                    $logo = $siteSettings->logo_path ?? '';
                     $logoMini = $siteSettings->logo_mini_path ?? $logo;
                 @endphp
 
