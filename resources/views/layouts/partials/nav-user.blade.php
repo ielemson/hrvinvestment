@@ -5,6 +5,7 @@
 
     $avatarUrl = $user->avatar ? asset('storage/' . $user->avatar) : asset('admin/images/faces/user.png');
 @endphp
+
 <nav class="navbar horizontal-layout col-lg-12 col-12 p-0">
     <div class="container d-flex flex-row">
 
@@ -17,6 +18,7 @@
                 <img src="{{ asset($logo) }}" alt="logo" />
             </a>
         </div>
+
 
         {{-- TOP BAR --}}
         <div class="navbar-menu-wrapper d-flex align-items-center">
@@ -73,13 +75,13 @@
                             <i class="mdi mdi-account-outline mr-2"></i> My Profile
                         </a>
 
-                        <a class="dropdown-item" href="{{ route('user.profile.edit') }}#password">
+                        <a class="dropdown-item" href="{{ route('user.profile.edit') }}">
                             <i class="mdi mdi-shield-lock-outline mr-2"></i> Security Settings
                         </a>
 
-                        <a class="dropdown-item">
+                        {{-- <a class="dropdown-item">
                             <i class="mdi mdi-help-circle-outline mr-2"></i> Help / Support
-                        </a>
+                        </a> --}}
 
                         <div class="dropdown-divider"></div>
 
@@ -125,23 +127,118 @@
 
                 {{-- Loans --}}
                 <li class="nav-item mega-menu {{ request()->routeIs('user.loans.*') ? 'active' : '' }}">
-                    <a href="{{ route('user.loans.index') }}" class="nav-link">
+                    <a href="#" class="nav-link">
                         <i class="mdi mdi-cash-multiple link-icon"></i>
                         <span class="menu-title">Loans</span>
                         <i class="menu-arrow"></i>
                     </a>
 
-                </li>
+                    <div class="submenu">
+                        <div class="row col-group-wrapper">
 
-                {{-- Settings --}}
-                <li class="nav-item {{ request()->routeIs('user.profile.*') ? 'active' : '' }}">
-                    <a href="{{ route('user.profile.edit') }}" class="nav-link">
-                        <i class="mdi mdi-settings-outline link-icon"></i>
-                        <span class="menu-title">Settings</span>
+                            <div class="col-md-4">
+                                <p class="category-heading">Apply & Manage</p>
+                                <ul class="submenu-item">
+                                    {{-- <li><a class="nav-link" href="{{ route('user.loans.create') }}">Apply for Loan</a> --}}
+                </li>
+                <li><a class="nav-link" href="{{ route('user.loans.index') }}">My Loans</a></li>
+                <li>
+                    <a class="nav-link" href="{{ route('user.loans.index', ['status' => 'active']) }}">
+                        Active Loan
                     </a>
                 </li>
-
+                <li>
+                    <a class="nav-link" href="{{ route('user.loans.index', ['status' => 'completed']) }}">
+                        Loan History
+                    </a>
+                </li>
             </ul>
         </div>
+
+        <div class="col-md-4">
+            <p class="category-heading">Status Tracking</p>
+            <ul class="submenu-item">
+                <li>
+                    <a class="nav-link" href="{{ route('user.loans.index', ['status' => 'under_review']) }}">
+                        Under Review
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ route('user.loans.index', ['status' => 'approved']) }}">
+                        Approved
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ route('user.loans.index', ['status' => 'disbursed']) }}">
+                        Disbursement
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        {{-- <div class="col-md-4">
+                                <p class="category-heading">Offers</p>
+                                <ul class="submenu-item">
+                                    <li><a class="nav-link" href="{{ route('user.dashboard') }}#loan-limit">My Loan
+                                            Limit</a></li>
+                                    <li><a class="nav-link" href="{{ route('user.dashboard') }}#offers">Personalized
+                                            Offers</a></li>
+                                    <li><a class="nav-link"
+                                            href="{{ route('user.dashboard') }}#eligibility">Eligibility Tips</a></li>
+                                </ul>
+                            </div> --}}
+
+    </div>
+    </div>
+    </li>
+
+    {{-- Repayments --}}
+    {{-- <li class="nav-item mega-menu {{ request()->routeIs('repayments.*') ? 'active' : '' }}">
+                    <a href="#" class="nav-link">
+                        <i class="mdi mdi-calendar-clock link-icon"></i>
+                        <span class="menu-title">Repayments</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+
+                    <div class="submenu">
+                        <div class="row col-group-wrapper">
+                            <div class="col-md-4">
+                                <p class="category-heading">Schedule</p>
+                                <ul class="submenu-item">
+                                    <li><a class="nav-link" href="#">Repayment Schedule</a></li>
+                                    <li><a class="nav-link" href="#">Upcoming Due Dates</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="col-md-4">
+                                <p class="category-heading">Payments</p>
+                                <ul class="submenu-item">
+                                    <li><a class="nav-link" href="#">Make a Payment</a></li>
+                                    <li><a class="nav-link" href="#">Paid Installments</a></li>
+                                    <li><a class="nav-link" href="#">Unpaid Installments</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="col-md-4">
+                                <p class="category-heading">History</p>
+                                <ul class="submenu-item">
+                                    <li><a class="nav-link" href="#">Repayment History</a></li>
+                                    <li><a class="nav-link" href="#">Receipts</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li> --}}
+
+    {{-- Settings --}}
+    <li class="nav-item {{ request()->routeIs('user.profile.*') ? 'active' : '' }}">
+        <a href="{{ route('user.profile.edit') }}" class="nav-link">
+            <i class="mdi mdi-settings-outline link-icon"></i>
+            <span class="menu-title">Settings</span>
+        </a>
+    </li>
+
+    </ul>
+    </div>
     </div>
 </nav>

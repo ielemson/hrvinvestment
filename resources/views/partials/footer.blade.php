@@ -8,9 +8,9 @@
                         <span>HV UK RF1 INVESTMENTS LTD &amp; HV Royalty Acquisition II Trust</span>
                         &nbsp;&copy;&nbsp;<span class="copyright-year"></span>.&nbsp;
                         <br class="d-sm-none">
-                        <a class="link-underline" href="javascript:;">Privacy Policy</a>
+                        <a class="link-underline" href="{{ route('privacy.policy') }}">Privacy Policy</a>
                         &nbsp;|&nbsp;
-                        <a class="link-underline" href="javascript:;">Terms of Use</a>
+                        <a class="link-underline" href="{{ route('terms.condition') }}">Terms of Use</a>
                     </p>
                 </div>
 

@@ -48,14 +48,7 @@ class FrontPagesController extends Controller
     /**
      * Blog listing page
      */
-    // public function blog()
-    // {
-    //     $services = \App\Models\Service::where('is_active', true)
-    //         ->orderBy('sort_order')
-    //         ->take(6)
-    //         ->get();
-    //     return view('pages.blog.index', compact("services"));
-    // }
+
 
     /**
      * Contact page
@@ -67,6 +60,22 @@ class FrontPagesController extends Controller
             ->get();
 
         return view('pages.contact', compact("services"));
+    }
+    public function privacy_policy()
+    {
+        $services = \App\Models\Service::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('pages.privacy_policy', compact("services"));
+    }
+    public function terms_condition()
+    {
+        $services = \App\Models\Service::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('pages.terms_condition', compact("services"));
     }
 
     /**
@@ -93,7 +102,7 @@ class FrontPagesController extends Controller
         $services = \App\Models\Service::where('is_active', true)
             ->orderBy('sort_order')
             ->get();
-        return view('pages.home', compact('services'));
+        return view('pages.how_it_works', compact('services'));
     }
 
     public function showservice($slug)

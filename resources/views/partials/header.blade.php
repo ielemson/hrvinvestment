@@ -106,13 +106,6 @@
                                       <a href="{{ route('home') }}">Home</a>
                                   </li>
 
-                                  <li class="{{ request()->routeIs('about') ? 'active' : '' }}">
-                                      <a href="{{ route('about') }}">About</a>
-                                  </li>
-
-                                  {{-- <li class="{{ request()->routeIs('services.*') ? 'active' : '' }}">
-                                <a href="{{ route('services.index') }}">Services</a>
-                            </li> --}}
                                   @if (!empty($services) && count($services))
                                       <li>
                                           <a href="#">Services</a>
@@ -129,7 +122,11 @@
                                   @endif
 
                                   <li class="{{ request()->routeIs('how-it-works') ? 'active' : '' }}">
-                                      <a href="{{ route('how-it-works') }}">How It Works</a>
+                                      <a href="{{ route('how_it_works') }}">How It Works</a>
+                                  </li>
+
+                                  <li class="{{ request()->routeIs('about') ? 'active' : '' }}">
+                                      <a href="{{ route('about') }}">About</a>
                                   </li>
 
                                   <li class="{{ request()->routeIs('contact') ? 'active' : '' }}">

@@ -36,10 +36,11 @@ Route::controller(FrontPagesController::class)->group(function () {
     Route::get('/services', 'services')->name('services.index');
     Route::get('/services/{service:slug}', 'showservice')->name('services.show');
 
-    Route::get('/blog', 'blog')->name('blog');
-    Route::get('/how-it-works', 'howitworks')->name('how-it-works');
+    Route::get('/how-it-works', 'howitworks')->name('how_it_works');
 
     Route::get('/contact', 'contact')->name('contact');
+    Route::get('/privacy-policy', 'privacy_policy')->name('privacy.policy');
+    Route::get('/terms-condition', 'terms_condition')->name('terms.condition');
 });
 
 /** Single contact POST (remove duplicates) */
