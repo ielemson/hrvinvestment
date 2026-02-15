@@ -107,7 +107,7 @@ Route::prefix('user')
         Route::get('/loans/view/{id}', [UserLoanController::class, 'show'])->name('loans.show');
 
         /** Apply */
-        Route::post('/apply', [LoanKycController::class, 'store'])->name('apply.store');
+        Route::post('/apply', [LoanKycController::class, 'store'])->name('loan.store');
     });
 
 

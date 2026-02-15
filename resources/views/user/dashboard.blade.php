@@ -6,8 +6,8 @@
         {{-- @include('user.partials.kyc_notification') --}}
         @include('user.partials.alerts')
         <!-- =====================
-                                                                                                        SUMMARY CARDS
-                                                                                                        ====================== -->
+                                                                                                            SUMMARY CARDS
+                                                                                                            ====================== -->
         @php
             // DB: site_settings fields
 
@@ -134,8 +134,8 @@
         </div>
 
         <!-- =====================
-                LOAN PROGRESS + KYC
-                ====================== -->
+                    LOAN PROGRESS + KYC
+                    ====================== -->
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card mx-auto">
                 <div class="card shadow-sm h-100">
@@ -173,14 +173,15 @@
                                                     $badge = match ($status) {
                                                         'approved' => 'success',
                                                         'reviewed' => 'primary',
+                                                        'rejected' => 'danger',
+                                                        'cancelled' => 'secondary',
                                                         default => 'warning',
                                                     };
 
-                                                    $isCompleted = $status === 'approved';
+                                                    $isCompleted = in_array($status, ['reviewed', 'approved'], true);
                                                     $isActive = (bool) ($item['is_active'] ?? false);
-                                                    $isLocked = !$isActive;
+                                                    $isLocked = !$isActive && !$isCompleted;
 
-                                                    // 🔹 Get actioned date safely
                                                     $levelRow = $loan->workflowLevels->firstWhere(
                                                         'level_key',
                                                         $item['key'],
@@ -276,8 +277,8 @@
         </div>
 
         <!-- =====================
-                                                                                           LOAN HISTORY
-                                                                               ====================== -->
+                                                                                               LOAN HISTORY
+                                                                                   ====================== -->
         <div class="row">
             <div class="col-12 grid-margin">
                 <div class="card">
@@ -360,8 +361,8 @@
                 </div>
             </div>
             <!-- =====================
-                                                                                                                                                                            REPAYMENT HISTORY
-                                                                                                                                                   ====================== -->
+                                                                                                                                                                                    REPAYMENT HISTORY
+                                                                                                                                                           ====================== -->
             <div class="row">
                 <div class="col-12 grid-margin">
                     <div class="card">
@@ -411,8 +412,8 @@
 
 
             <!-- =====================
-                                                                                                                                                                                    NOTIFICATIONS
-                                                                                                                                                                                    ====================== -->
+                                                                                                                                                                                            NOTIFICATIONS
+                                                                                                                                                                                            ====================== -->
             {{-- <div class="row">
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card">

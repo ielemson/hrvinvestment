@@ -16,6 +16,7 @@ class Kyc extends Model
         'phone_country_code',
         'gender',
         'address',
+        'country',
         'city',
         'state',
         'status',

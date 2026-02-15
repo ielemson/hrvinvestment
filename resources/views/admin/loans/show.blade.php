@@ -76,15 +76,20 @@
                                 ];
 
                                 // KYC snapshot (if relationship exists)
-                                $kyc = $loan->user->kyc()->latest()->first();
+                                // KYC snapshot (if relationship exists)
+                                $kyc = $loan->user->kyc; // no need for latest() if hasOne
+
                                 $kycE164 = $kyc->phone_e164 ?? ($kyc->phone ?? null);
+
                                 $kycAddress = $kyc
-                                    ? trim(
-                                        ($kyc->address ?? '') .
-                                            ' ' .
-                                            ($kyc->city ? ', ' . $kyc->city : '') .
-                                            ($kyc->state ? ', ' . $kyc->state : ''),
-                                    )
+                                    ? collect([
+                                        $kyc->address,
+                                        $kyc->city,
+                                        $kyc->state,
+                                        $kyc->country, // ✅ added
+                                    ])
+                                        ->filter()
+                                        ->implode(', ')
                                     : null;
 
                                 // Simple affordability hint (optional): if income band known, compare with estimated monthly (very rough)

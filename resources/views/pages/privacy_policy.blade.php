@@ -180,7 +180,7 @@
                                 <li><strong>Email (General):</strong> <a
                                         href="mailto:info@hvrf1investments.com">info@hvrf1investments.com</a></li>
                                 <li><strong>Email (Advisory):</strong> <a
-                                        href="mailto:advisory@hvroylatytrust.com">advisory@hvroylatytrust.com</a></li>
+                                        href="mailto:advisory@hvrf1investments.com">advisory@hvrf1investments.com</a></li>
                                 <li><strong>Office Hours:</strong> Monday–Friday, 9 AM–6 PM WAT/GMT</li>
                             </ul>
 

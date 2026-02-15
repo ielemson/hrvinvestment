@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Loan;
 use App\Notifications\LoanSubmitted;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class UserLoanController extends Controller
@@ -33,12 +34,15 @@ class UserLoanController extends Controller
         $loans = $user->loans()
             ->latest()
             ->paginate(10);
+        $countries = DB::table('countries')
+            ->orderBy('name')->get();
 
         return view('user.loans.create_loan_kyc', [
             'loans'       => $loans,
             'kyc'         => $kyc,
             'kycStatus'   => $kycStatus,
             'kycApproved' => $kycStatus === 'approved',
+            'countries' => $countries
         ]);
     }
 

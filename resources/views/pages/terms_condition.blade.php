@@ -124,8 +124,8 @@
                                 </li>
                                 <li>
                                     <strong>Advisory Desk:</strong>
-                                    <a href="mailto:advisory@hvroylatytrust.com">
-                                        advisory@hvroylatytrust.com
+                                    <a href="mailto:advisory@hvrf1investments.com">
+                                        advisory@hvrf1investments.com
                                     </a>
                                 </li>
                                 <li>

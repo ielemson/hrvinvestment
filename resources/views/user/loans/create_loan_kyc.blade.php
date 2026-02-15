@@ -4,10 +4,10 @@
 @section('content')
     <div class="content-wrapper">
         @php $currencySymbol = $siteSettings->currency_symbol ?? '$'; @endphp
-        {{-- @include('user.partials.kyc_notification') --}}
 
         <div class="row">
             <div class="col-12 grid-margin mx-auto">
+
                 {{-- GLOBAL SUCCESS --}}
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -28,7 +28,7 @@
                     </div>
                 @endif
 
-                {{-- LARAVEL VALIDATION SUMMARY --}}
+                {{-- VALIDATION SUMMARY --}}
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <strong>Submission failed.</strong> Please fix the highlighted fields.
@@ -39,11 +39,8 @@
                         </ul>
                     </div>
                 @endif
-                <div id="formAlertContainer"></div>
-
-                {{-- ONE FORM, TWO CARDS --}}
-                <form id="applyForm" class="forms-sample" method="POST" action="{{ route('user.apply.store') }}"
-                    enctype="multipart/form-data" data-parsley-validate novalidate>
+                <form id="applyForm" class="forms-sample" method="POST" action="{{ route('user.loan.store') }}"
+                    enctype="multipart/form-data">
                     @csrf
 
                     {{-- ===================== KYC CARD ===================== --}}
@@ -53,25 +50,26 @@
                             <p class="card-description text-muted">Tell us about yourself and upload required documents.</p>
 
                             <div class="row">
+                                {{-- full_name --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="full_name">Full Name <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('full_name') is-invalid @enderror"
                                             id="full_name" name="full_name"
                                             value="{{ old('full_name', $kyc->full_name ?? auth()->user()->name) }}"
-                                            placeholder="Your full name" required data-parsley-required="true"
-                                            data-parsley-required-message="Full name is required">
+                                            placeholder="Your full name" required>
                                         @error('full_name')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
+
+                                {{-- gender --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="gender">Gender <span class="text-danger">*</span></label>
                                         <select class="form-control @error('gender') is-invalid @enderror" id="gender"
-                                            name="gender" required data-parsley-required="true"
-                                            data-parsley-required-message="Select a gender">
+                                            name="gender" required>
                                             <option value="">-- Select --</option>
                                             @foreach (['Male', 'Female', 'Non-binary', 'Prefer not to say', 'Self-describe'] as $g)
                                                 <option value="{{ $g }}"
@@ -85,39 +83,38 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group phone-group">
-                                        <label for="phone">Phone Number</label>
 
+                                {{-- phone --}}
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="phone">Phone Number <span class="text-danger">*</span></label>
                                         <input type="tel" id="phone" name="phone"
                                             class="form-control @error('phone') is-invalid @enderror"
                                             value="{{ old('phone', $kyc->phone ?? '') }}" placeholder="Enter phone number"
                                             required>
-
-                                        {{-- always present, so height is reserved --}}
-                                        <div class="invalid-feedback @error('phone') d-block @enderror">
-                                            @error('phone')
-                                                {{ $message }}
-                                            @else
-                                                &nbsp;
-                                            @enderror
-                                        </div>
+                                        @error('phone')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
-                                    <input type="hidden" name="phone_country_code" id="phone_country_code">
-                                    <input type="hidden" name="phone_national" id="phone_national">
-                                    <input type="hidden" name="phone_e164" id="phone_e164">
-                                    <input type="hidden" name="phone_country_iso" id="phone_country_iso">
+                                    {{-- hidden fields (do NOT mark required) --}}
+                                    <input type="hidden" name="phone_country_code" id="phone_country_code"
+                                        value="{{ old('phone_country_code') }}">
+                                    <input type="hidden" name="phone_national" id="phone_national"
+                                        value="{{ old('phone_national') }}">
+                                    <input type="hidden" name="phone_e164" id="phone_e164"
+                                        value="{{ old('phone_e164') }}">
+                                    <input type="hidden" name="phone_country_iso" id="phone_country_iso"
+                                        value="{{ old('phone_country_iso') }}">
                                 </div>
 
-
+                                {{-- address --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="address">Residential Address <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('address') is-invalid @enderror"
                                             id="address" name="address" value="{{ old('address', $kyc->address ?? '') }}"
-                                            placeholder="Street" required data-parsley-required="true"
-                                            data-parsley-required-message="Residential address is required">
+                                            placeholder="Street" required>
                                         @error('address')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -126,27 +123,46 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
+                                {{-- country --}}
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="city">City <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control @error('city') is-invalid @enderror"
-                                            id="city" name="city" value="{{ old('city', $kyc->city ?? '') }}"
-                                            placeholder="City" required data-parsley-required="true"
-                                            data-parsley-required-message="City is required">
-                                        @error('city')
+                                        <label for="country">Country <span class="text-danger">*</span></label>
+                                        <select class="form-control @error('country') is-invalid @enderror" id="country"
+                                            name="country" required>
+                                            <option value="">Select Country</option>
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country->name }}">
+                                                    {{ $country->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('country')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                {{-- state --}}
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="state">State <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('state') is-invalid @enderror"
                                             id="state" name="state" value="{{ old('state', $kyc->state ?? '') }}"
-                                            placeholder="State" required data-parsley-required="true"
-                                            data-parsley-required-message="State is required">
+                                            placeholder="State" required>
                                         @error('state')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                {{-- city --}}
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="city">City <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control @error('city') is-invalid @enderror"
+                                            id="city" name="city" value="{{ old('city', $kyc->city ?? '') }}"
+                                            placeholder="City" required>
+                                        @error('city')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -167,7 +183,9 @@
                                             <div class="d-flex justify-content-between align-items-center mb-2">
                                                 <strong class="doc-title">Document #{{ $i + 1 }}</strong>
                                                 <button type="button"
-                                                    class="btn btn-sm btn-outline-danger remove-doc">Remove</button>
+                                                    class="btn btn-sm btn-outline-danger remove-doc {{ $i == 0 ? 'd-none' : '' }}">
+                                                    Remove
+                                                </button>
                                             </div>
 
                                             <div class="row">
@@ -177,11 +195,10 @@
                                                                 class="text-danger">*</span></label>
                                                         <input type="text"
                                                             name="documents[{{ $i }}][label]"
-                                                            value="{{ $oldDoc['label'] ?? '' }}"
-                                                            class="form-control @error("documents.$i.label") is-invalid @enderror"
+                                                            value="{{ old("documents.$i.label", $oldDoc['label'] ?? '') }}"
+                                                            class="form-control doc-label @error("documents.$i.label") is-invalid @enderror"
                                                             placeholder="e.g. International Passport, Bank Statement"
-                                                            required data-parsley-required="true"
-                                                            data-parsley-required-message="Document label is required">
+                                                            required>
                                                         @error("documents.$i.label")
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
@@ -192,23 +209,29 @@
                                                     <div class="form-group mb-2">
                                                         <label>Document Category <span class="text-danger">*</span></label>
                                                         <select name="documents[{{ $i }}][type]"
-                                                            class="form-control @error("documents.$i.type") is-invalid @enderror"
-                                                            required data-parsley-required="true"
-                                                            data-parsley-required-message="Select a document category">
+                                                            class="form-control doc-type @error("documents.$i.type") is-invalid @enderror"
+                                                            required>
                                                             <option value="">-- Select --</option>
+                                                            <option value="passport"
+                                                                {{ old("documents.$i.type", $oldDoc['type'] ?? '') === 'passport' ? 'selected' : '' }}>
+                                                                International Passport
+                                                            </option>
                                                             <option value="id_card"
-                                                                {{ ($oldDoc['type'] ?? '') === 'id_card' ? 'selected' : '' }}>
-                                                                Government ID</option>
+                                                                {{ old("documents.$i.type", $oldDoc['type'] ?? '') === 'id_card' ? 'selected' : '' }}>
+                                                                Government ID
+                                                            </option>
                                                             <option value="proof_of_income"
-                                                                {{ ($oldDoc['type'] ?? '') === 'proof_of_income' ? 'selected' : '' }}>
-                                                                Proof of Income</option>
+                                                                {{ old("documents.$i.type", $oldDoc['type'] ?? '') === 'proof_of_income' ? 'selected' : '' }}>
+                                                                Proof of Income
+                                                            </option>
                                                             <option value="proof_of_address"
-                                                                {{ ($oldDoc['type'] ?? '') === 'proof_of_address' ? 'selected' : '' }}>
-                                                                Proof of Address</option>
-
+                                                                {{ old("documents.$i.type", $oldDoc['type'] ?? '') === 'proof_of_address' ? 'selected' : '' }}>
+                                                                Proof of Address
+                                                            </option>
                                                             <option value="other"
-                                                                {{ ($oldDoc['type'] ?? '') === 'other' ? 'selected' : '' }}>
-                                                                Other</option>
+                                                                {{ old("documents.$i.type", $oldDoc['type'] ?? '') === 'other' ? 'selected' : '' }}>
+                                                                Other
+                                                            </option>
                                                         </select>
                                                         @error("documents.$i.type")
                                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -220,26 +243,16 @@
                                             <div class="form-group mb-0">
                                                 <label>Upload File <span class="text-danger">*</span></label>
                                                 <input type="file" name="documents[{{ $i }}][file]"
-                                                    class="file-upload-default" accept=".jpg,.jpeg,.png,.pdf" required
-                                                    data-parsley-required="true"
-                                                    data-parsley-required-message="Please upload a document">
-
-                                                <div class="input-group col-xs-12">
-                                                    <input type="text" class="form-control file-upload-info" disabled
-                                                        placeholder="Choose file...">
-                                                    <span class="input-group-append">
-                                                        <button class="file-upload-browse btn btn-primary"
-                                                            type="button">Upload</button>
-                                                    </span>
-                                                </div>
-
+                                                    class="form-control doc-file @error("documents.$i.file") is-invalid @enderror"
+                                                    accept=".jpg,.jpeg,.png,.pdf" required>
                                                 @error("documents.$i.file")
-                                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                                    <div class="invalid-feedback d-block">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
                                     @endforeach
                                 @else
+                                    {{-- Default first document row --}}
                                     <div class="doc-row border rounded p-3 mb-3">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
                                             <strong class="doc-title">Document #1</strong>
@@ -251,44 +264,43 @@
                                             <div class="col-md-6">
                                                 <div class="form-group mb-2">
                                                     <label>Document Name (Label) <span class="text-danger">*</span></label>
-                                                    <input type="text" name="documents[0][label]" class="form-control"
-                                                        placeholder="e.g. International Passport, Bank Statement" required
-                                                        data-parsley-required="true"
-                                                        data-parsley-required-message="Document label is required">
+                                                    <input type="text" name="documents[0][label]"
+                                                        class="form-control doc-label @error('documents.0.label') is-invalid @enderror"
+                                                        placeholder="e.g. International Passport, Bank Statement" required>
+                                                    @error('documents.0.label')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group mb-2">
                                                     <label>Document Category <span class="text-danger">*</span></label>
-                                                    <select name="documents[0][type]" class="form-control" required
-                                                        data-parsley-required="true"
-                                                        data-parsley-required-message="Select a document category">
+                                                    <select name="documents[0][type]"
+                                                        class="form-control doc-type @error('documents.0.type') is-invalid @enderror"
+                                                        required>
                                                         <option value="">-- Select --</option>
+                                                        <option value="passport">International Passport</option>
                                                         <option value="id_card">Government ID</option>
                                                         <option value="proof_of_income">Proof of Income</option>
                                                         <option value="proof_of_address">Proof of Address</option>
-
                                                         <option value="other">Other</option>
                                                     </select>
+                                                    @error('documents.0.type')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="form-group mb-0">
                                             <label>Upload File <span class="text-danger">*</span></label>
-                                            <input type="file" name="documents[0][file]" class="file-upload-default"
-                                                accept=".jpg,.jpeg,.png,.pdf" required data-parsley-required="true"
-                                                data-parsley-required-message="Please upload a document">
-
-                                            <div class="input-group col-xs-12">
-                                                <input type="text" class="form-control file-upload-info" disabled
-                                                    placeholder="Choose file...">
-                                                <span class="input-group-append">
-                                                    <button class="file-upload-browse btn btn-primary"
-                                                        type="button">Upload</button>
-                                                </span>
-                                            </div>
+                                            <input type="file" name="documents[0][file]"
+                                                class="form-control doc-file @error('documents.0.file') is-invalid @enderror"
+                                                accept=".jpg,.jpeg,.png,.pdf" required>
+                                            @error('documents.0.file')
+                                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endif
@@ -298,6 +310,7 @@
                                 + Add another document
                             </button>
 
+                            {{-- Template for dynamic documents --}}
                             <template id="doc-template">
                                 <div class="doc-row border rounded p-3 mb-3">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -311,19 +324,16 @@
                                             <div class="form-group mb-2">
                                                 <label>Document Name (Label) <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control doc-label"
-                                                    placeholder="e.g. International Passport, Bank Statement" required
-                                                    data-parsley-required="true"
-                                                    data-parsley-required-message="Document label is required">
+                                                    placeholder="e.g. International Passport, Bank Statement" required>
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="form-group mb-2">
                                                 <label>Document Category <span class="text-danger">*</span></label>
-                                                <select class="form-control doc-type" required
-                                                    data-parsley-required="true"
-                                                    data-parsley-required-message="Select a document category">
+                                                <select class="form-control doc-type" required>
                                                     <option value="">-- Select --</option>
+                                                    <option value="passport">International Passport</option>
                                                     <option value="id_card">Government ID</option>
                                                     <option value="proof_of_income">Proof of Income</option>
                                                     <option value="proof_of_address">Proof of Address</option>
@@ -335,31 +345,22 @@
 
                                     <div class="form-group mb-0">
                                         <label>Upload File <span class="text-danger">*</span></label>
-                                        <input type="file" class="file-upload-default doc-file"
-                                            accept=".jpg,.jpeg,.png,.pdf" required data-parsley-required="true"
-                                            data-parsley-required-message="Please upload a document">
-                                        <div class="input-group col-xs-12">
-                                            <input type="text" class="form-control file-upload-info" disabled
-                                                placeholder="Choose file...">
-                                            <span class="input-group-append">
-                                                <button class="file-upload-browse btn btn-primary"
-                                                    type="button">Upload</button>
-                                            </span>
-                                        </div>
+                                        <input type="file" class="form-control doc-file" accept=".jpg,.jpeg,.png,.pdf"
+                                            required>
                                     </div>
                                 </div>
                             </template>
                         </div>
                     </div>
 
-                    {{-- ===================== LOAN CARD (ALL REQUIRED) ===================== --}}
+                    {{-- ===================== LOAN CARD ===================== --}}
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Loan Application</h4>
                             <p class="card-description text-muted">Provide accurate details. Your request will be reviewed.
                             </p>
 
-                            <h6 class="mt-2 mb-2">Project & Company Details</h6>
+                            @php $currencySymbol = $siteSettings->currency_symbol ?? '$'; @endphp
 
                             <div class="row">
                                 <div class="col-md-6">
@@ -368,8 +369,7 @@
                                         <input type="text"
                                             class="form-control @error('project_name') is-invalid @enderror"
                                             id="project_name" name="project_name" value="{{ old('project_name') }}"
-                                            placeholder="Enter project name" required data-parsley-required="true"
-                                            data-parsley-required-message="Project name is required">
+                                            required>
                                         @error('project_name')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -378,14 +378,13 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="amount_requested">Project Amount Requested
-                                            ({{ $currencySymbol }}) <span class="text-danger">*</span></label>
+                                        <label for="amount_requested">Project Amount Requested ({{ $currencySymbol }})
+                                            <span class="text-danger">*</span></label>
                                         <input type="number"
                                             class="form-control @error('amount_requested') is-invalid @enderror"
                                             id="amount_requested" name="amount_requested"
                                             value="{{ old('amount_requested') }}" min="0" step="100"
-                                            placeholder="e.g. 50000000" required data-parsley-required="true"
-                                            data-parsley-required-message="Project amount requested is required">
+                                            required>
                                         @error('amount_requested')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -400,8 +399,7 @@
                                         <input type="text"
                                             class="form-control @error('company_name') is-invalid @enderror"
                                             id="company_name" name="company_name" value="{{ old('company_name') }}"
-                                            placeholder="Enter company name" required data-parsley-required="true"
-                                            data-parsley-required-message="Company name is required">
+                                            required>
                                         @error('company_name')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -415,9 +413,7 @@
                                         <input type="text"
                                             class="form-control @error('company_address') is-invalid @enderror"
                                             id="company_address" name="company_address"
-                                            value="{{ old('company_address') }}" placeholder="Company address" required
-                                            data-parsley-required="true"
-                                            data-parsley-required-message="Company address is required">
+                                            value="{{ old('company_address') }}" required>
                                         @error('company_address')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -431,9 +427,7 @@
                                         <label for="ceo_name">CEO Name <span class="text-danger">*</span></label>
                                         <input type="text"
                                             class="form-control @error('ceo_name') is-invalid @enderror" id="ceo_name"
-                                            name="ceo_name" value="{{ old('ceo_name') }}" placeholder="CEO full name"
-                                            required data-parsley-required="true"
-                                            data-parsley-required-message="CEO name is required">
+                                            name="ceo_name" value="{{ old('ceo_name') }}" required>
                                         @error('ceo_name')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -445,10 +439,7 @@
                                         <label for="ceo_email">CEO Email <span class="text-danger">*</span></label>
                                         <input type="email"
                                             class="form-control @error('ceo_email') is-invalid @enderror" id="ceo_email"
-                                            name="ceo_email" value="{{ old('ceo_email') }}"
-                                            placeholder="e.g. ceo@company.com" required data-parsley-required="true"
-                                            data-parsley-type="email" data-parsley-type-message="Enter a valid CEO email"
-                                            data-parsley-required-message="CEO email is required">
+                                            name="ceo_email" value="{{ old('ceo_email') }}" required>
                                         @error('ceo_email')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -464,9 +455,7 @@
                                         <input type="text"
                                             class="form-control @error('project_location') is-invalid @enderror"
                                             id="project_location" name="project_location"
-                                            value="{{ old('project_location') }}" placeholder="Location Address" required
-                                            data-parsley-required="true"
-                                            data-parsley-required-message="Project location is required">
+                                            value="{{ old('project_location') }}" required>
                                         @error('project_location')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -478,9 +467,7 @@
                                         <label for="project_urgency">Project Urgency <span
                                                 class="text-danger">*</span></label>
                                         <select class="form-control @error('project_urgency') is-invalid @enderror"
-                                            id="project_urgency" name="project_urgency" required
-                                            data-parsley-required="true"
-                                            data-parsley-required-message="Select project urgency">
+                                            id="project_urgency" name="project_urgency" required>
                                             <option value="">-- Select --</option>
                                             <option value="urgent"
                                                 {{ old('project_urgency') === 'urgent' ? 'selected' : '' }}>Urgent</option>
@@ -497,13 +484,11 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-
                                     <div class="form-group">
                                         <label for="project_type">Type of Project <span
                                                 class="text-danger">*</span></label>
                                         <select class="form-control @error('project_type') is-invalid @enderror"
-                                            id="project_type" name="project_type" required data-parsley-required="true"
-                                            data-parsley-required-message="Select a project type">
+                                            id="project_type" name="project_type" required>
                                             <option value="">-- Select --</option>
                                             @php
                                                 $projectTypes = [
@@ -542,21 +527,20 @@
                                         <label for="project_summary">Brief Project Summary <span
                                                 class="text-danger">*</span></label>
                                         <textarea class="form-control @error('project_summary') is-invalid @enderror" id="project_summary"
-                                            name="project_summary" rows="3" maxlength="3000" required data-parsley-required="true"
-                                            data-parsley-maxlength="3000" data-parsley-required-message="Project summary is required"
-                                            data-parsley-maxlength-message="Maximum 3000 characters">{{ old('project_summary') }}</textarea>
+                                            name="project_summary" rows="3" maxlength="3000" required>{{ old('project_summary') }}</textarea>
                                         @error('project_summary')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
+                            </div>
 
+                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="loan_type">Type of Loan <span class="text-danger">*</span></label>
                                         <select class="form-control @error('loan_type') is-invalid @enderror"
-                                            id="loan_type" name="loan_type" required data-parsley-required="true"
-                                            data-parsley-required-message="Select a loan type">
+                                            id="loan_type" name="loan_type" required>
                                             <option value="">-- Select --</option>
                                             <option value="debt_financing"
                                                 {{ old('loan_type') === 'debt_financing' ? 'selected' : '' }}>Debt
@@ -564,8 +548,7 @@
                                             <option value="equity" {{ old('loan_type') === 'equity' ? 'selected' : '' }}>
                                                 Equity</option>
                                             <option value="joint_venture"
-                                                {{ old('loan_type') === 'joint_venture' ? 'selected' : '' }}>Joint
-                                                Venture
+                                                {{ old('loan_type') === 'joint_venture' ? 'selected' : '' }}>Joint Venture
                                             </option>
                                             <option value="investment"
                                                 {{ old('loan_type') === 'investment' ? 'selected' : '' }}>Investment
@@ -583,14 +566,12 @@
                                                 class="text-danger">*</span></label>
                                         <select
                                             class="form-control @error('expected_duration_years') is-invalid @enderror"
-                                            id="expected_duration_years" name="expected_duration_years" required
-                                            data-parsley-required="true" data-parsley-required-message="Select duration">
+                                            id="expected_duration_years" name="expected_duration_years" required>
                                             <option value="">-- Select --</option>
                                             @foreach ([2, 3, 4, 5, 6, 7, 8, 9, 10] as $y)
                                                 <option value="{{ $y }}"
                                                     {{ old('expected_duration_years') == $y ? 'selected' : '' }}>
-                                                    {{ $y }} yrs
-                                                </option>
+                                                    {{ $y }} yrs</option>
                                             @endforeach
                                         </select>
                                         @error('expected_duration_years')
@@ -605,8 +586,7 @@
                                                 class="text-danger">*</span></label>
                                         <select
                                             class="form-control @error('previous_investor_funding') is-invalid @enderror"
-                                            id="previous_investor_funding" name="previous_investor_funding" required
-                                            data-parsley-required="true" data-parsley-required-message="Select yes or no">
+                                            id="previous_investor_funding" name="previous_investor_funding" required>
                                             <option value="">-- Select --</option>
                                             <option value="yes"
                                                 {{ old('previous_investor_funding') === 'yes' ? 'selected' : '' }}>Yes
@@ -622,29 +602,15 @@
                                 </div>
                             </div>
 
+                            {{-- bank statement (manual pick, no upload button) --}}
                             <div class="form-group">
-                                <label for="bank_account_statement">
-                                    Bank Account Statement <span class="text-danger">*</span>
-                                </label>
-
+                                <label for="bank_account_statement">Bank Account Statement <span
+                                        class="text-danger">*</span></label>
                                 <input type="file" id="bank_account_statement" name="bank_account_statement"
-                                    class="file-upload-default bank-upload-input @error('bank_account_statement') is-invalid @enderror"
-                                    accept=".pdf,.jpg,.jpeg,.png" required data-parsley-required="true"
-                                    data-parsley-required-message="Upload a bank statement" required>
-
-                                <div class="input-group col-xs-12">
-                                    <input type="text" class="form-control file-upload-info bank-upload-info" disabled
-                                        placeholder="Choose file...">
-
-                                    <span class="input-group-append">
-                                        <button class="btn btn-primary bank-upload-browse" type="button">
-                                            Upload
-                                        </button>
-                                    </span>
-                                </div>
-
+                                    class="form-control @error('bank_account_statement') is-invalid @enderror"
+                                    accept=".pdf,.jpg,.jpeg,.png" required>
                                 @error('bank_account_statement')
-                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -652,20 +618,17 @@
                             <h6 class="mb-2">Personal Details</h6>
 
                             <div class="row">
-                                {{-- Tenure --}}
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="tenure_months">Tenure (Months) <span
                                                 class="text-danger">*</span></label>
                                         <select class="form-control @error('tenure_months') is-invalid @enderror"
-                                            id="tenure_months" name="tenure_months" required data-parsley-required="true"
-                                            data-parsley-required-message="Tenure months is required">
+                                            id="tenure_months" name="tenure_months" required>
                                             <option value="">-- Select --</option>
                                             @foreach ([3, 6, 9, 12, 18, 24] as $m)
                                                 <option value="{{ $m }}"
-                                                    {{ old('tenure_months') == $m ? 'selected' : '' }}>
-                                                    {{ $m }} months
-                                                </option>
+                                                    {{ old('tenure_months') == $m ? 'selected' : '' }}>{{ $m }}
+                                                    months</option>
                                             @endforeach
                                         </select>
                                         @error('tenure_months')
@@ -674,27 +637,21 @@
                                     </div>
                                 </div>
 
-                                {{-- Repayment method --}}
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="repayment_method">Repayment Method <span
                                                 class="text-danger">*</span></label>
                                         <select class="form-control @error('repayment_method') is-invalid @enderror"
-                                            id="repayment_method" name="repayment_method" required
-                                            data-parsley-required="true"
-                                            data-parsley-required-message="Repayment method is required">
+                                            id="repayment_method" name="repayment_method" required>
                                             <option value="">-- Select --</option>
                                             <option value="bank_transfer"
-                                                {{ old('repayment_method') === 'bank_transfer' ? 'selected' : '' }}>
-                                                Bank Transfer
-                                            </option>
+                                                {{ old('repayment_method') === 'bank_transfer' ? 'selected' : '' }}>Bank
+                                                Transfer</option>
                                             <option value="direct_debit"
-                                                {{ old('repayment_method') === 'direct_debit' ? 'selected' : '' }}>
-                                                Direct Debit
-                                            </option>
+                                                {{ old('repayment_method') === 'direct_debit' ? 'selected' : '' }}>Direct
+                                                Debit</option>
                                             <option value="wallet"
-                                                {{ old('repayment_method') === 'wallet' ? 'selected' : '' }}>
-                                                Wallet
+                                                {{ old('repayment_method') === 'wallet' ? 'selected' : '' }}>Wallet
                                             </option>
                                         </select>
                                         @error('repayment_method')
@@ -703,32 +660,26 @@
                                     </div>
                                 </div>
 
-                                {{-- Employment type --}}
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="employment_type">Employment Type <span
                                                 class="text-danger">*</span></label>
                                         <select class="form-control @error('employment_type') is-invalid @enderror"
-                                            id="employment_type" name="employment_type" required
-                                            data-parsley-required="true"
-                                            data-parsley-required-message="Employment type is required">
+                                            id="employment_type" name="employment_type" required>
                                             <option value="">-- Select --</option>
                                             <option value="salary"
-                                                {{ old('employment_type') === 'salary' ? 'selected' : '' }}>Salary
-                                            </option>
+                                                {{ old('employment_type') === 'salary' ? 'selected' : '' }}>Salary</option>
                                             <option value="business"
                                                 {{ old('employment_type') === 'business' ? 'selected' : '' }}>Business
                                             </option>
                                             <option value="freelance"
-                                                {{ old('employment_type') === 'freelance' ? 'selected' : '' }}>
-                                                Freelance
+                                                {{ old('employment_type') === 'freelance' ? 'selected' : '' }}>Freelance
                                             </option>
                                             <option value="agriculture"
                                                 {{ old('employment_type') === 'agriculture' ? 'selected' : '' }}>
                                                 Agriculture</option>
                                             <option value="other"
-                                                {{ old('employment_type') === 'other' ? 'selected' : '' }}>Other
-                                            </option>
+                                                {{ old('employment_type') === 'other' ? 'selected' : '' }}>Other</option>
                                         </select>
                                         @error('employment_type')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -738,13 +689,11 @@
                             </div>
 
                             <div class="row">
-                                {{-- Income band --}}
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="income_band">Income Band <span class="text-danger">*</span></label>
                                         <select class="form-control @error('income_band') is-invalid @enderror"
-                                            id="income_band" name="income_band" required data-parsley-required="true"
-                                            data-parsley-required-message="Income band is required">
+                                            id="income_band" name="income_band" required>
                                             <option value="">-- Select --</option>
                                             <option value="below_100k"
                                                 {{ old('income_band') === 'below_100k' ? 'selected' : '' }}>Below 100k
@@ -765,38 +714,26 @@
                                     </div>
                                 </div>
 
-                                @php
-
-                                    // Optional support email (fallback)
-                                    $interest_rate = $siteSettings->interest_rate ?? 0;
-
-                                @endphp
-                                {{-- Interest rate --}}
+                                @php $interest_rate = $siteSettings->interest_rate ?? 0; @endphp
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="interest_rate">Interest Rate (%) <span
                                                 class="text-danger">*</span></label>
                                         <input type="number"
                                             class="form-control @error('interest_rate') is-invalid @enderror"
-                                            id="interest_rate" name="interest_rate" value="{{ $interest_rate }}"
-                                            required data-parsley-required="true"
-                                            data-parsley-required-message="Interest rate is required" readonly>
+                                            id="interest_rate" name="interest_rate"
+                                            value="{{ old('interest_rate', $interest_rate) }}" readonly required>
                                         @error('interest_rate')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-
-                                {{-- (Optional) You can also add amount_requested here if your backend expects it as personal loan amount --}}
-                                {{-- But you already use amount_requested above, so leave it --}}
                             </div>
 
                             <div class="form-group">
                                 <label for="purpose">Purpose <span class="text-danger">*</span></label>
                                 <textarea class="form-control @error('purpose') is-invalid @enderror" id="purpose" name="purpose" rows="3"
-                                    maxlength="2000" placeholder="Briefly explain why you need this loan" required data-parsley-required="true"
-                                    data-parsley-required-message="Purpose is required" data-parsley-maxlength="2000"
-                                    data-parsley-maxlength-message="Maximum 2000 characters">{{ old('purpose') }}</textarea>
+                                    maxlength="2000" placeholder="Briefly explain why you need this loan" required>{{ old('purpose') }}</textarea>
                                 @error('purpose')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -806,11 +743,9 @@
                                 <div class="form-check">
                                     <input class="form-check-input @error('loan_consent') is-invalid @enderror"
                                         type="checkbox" id="loan_consent" name="loan_consent" value="1"
-                                        {{ old('loan_consent') ? 'checked' : '' }} required data-parsley-required="true"
-                                        data-parsley-required-message="You must accept the loan consent">
+                                        {{ old('loan_consent') ? 'checked' : '' }} required>
                                     <label class="form-check-label" for="loan_consent">
-                                        I confirm that the information provided is accurate and I consent to
-                                        verification.
+                                        I confirm that the information provided is accurate and I consent to verification.
                                         <span class="text-danger">*</span>
                                     </label>
                                     @error('loan_consent')
@@ -819,47 +754,35 @@
                                 </div>
                             </div>
 
-                            <button type="button" id="submitApplyBtn" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary">
                                 Submit KYC + Loan Application
                             </button>
                         </div>
                     </div>
                 </form>
+
+
             </div>
         </div>
     </div>
 @endsection
 
+
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
 
     <script>
-        /**
-         * ONE SCRIPT: jQuery + Vanilla KYC (intl-tel-input) + Dynamic Docs + Single File Upload
-         * - Prevents double file-dialog trigger
-         * - Keeps intl-tel-input hidden fields in sync
-         * - Keeps dynamic documents working (reindex + add/remove)
-         * - Works for bank statement upload too
-         */
-        $(function() {
-            /**
-             * ============================================================
-             * CONFIG
-             * ============================================================
-             */
-            const $applyForm = $('#applyForm'); // combined KYC + Loan form
-            const $loanForm = $('#loanForm'); // optional standalone loan form (AJAX)
-            const $documentsWrap = $('#documents-wrapper');
-            const $addDocBtn = $('#add-document');
-            const $docTpl = $('#doc-template');
+        document.addEventListener('DOMContentLoaded', function() {
 
-            /**
-             * ============================================================
-             * 1) intl-tel-input (KYC phone) + hidden fields
-             * ============================================================
-             */
+            const form = document.getElementById('applyForm');
+            const docsWrap = document.getElementById('documents-wrapper');
+            const addDocBtn = document.getElementById('add-document');
+            const tpl = document.getElementById('doc-template');
+
+            // ============================================================
+            // 1) intl-tel-input + hidden fields (single init, single handler)
+            // ============================================================
             const phoneInput = document.querySelector('#phone');
             const hCountryCode = document.getElementById('phone_country_code');
             const hNational = document.getElementById('phone_national');
@@ -905,357 +828,84 @@
                 phoneInput.addEventListener('countrychange', fillPhoneHiddenFields);
             }
 
-            /**
-             * ============================================================
-             * 2) DOCS: Reindex + Add/Remove (Dynamic KYC docs)
-             * ============================================================
-             */
+            // ============================================================
+            // 2) Dynamic documents: reindex names for Blade validation
+            // ============================================================
             function reindexDocs() {
-                if (!$documentsWrap.length) return;
+                if (!docsWrap) return;
 
-                const $rows = $documentsWrap.find('.doc-row');
+                const rows = docsWrap.querySelectorAll('.doc-row');
 
-                $rows.each(function(i) {
-                    const $row = $(this);
+                rows.forEach((row, i) => {
+                    const title = row.querySelector('.doc-title');
+                    if (title) title.textContent = `Document #${i + 1}`;
 
-                    $row.find('.doc-title').text('Document #' + (i + 1));
+                    const label = row.querySelector('.doc-label');
+                    const type = row.querySelector('.doc-type');
+                    const file = row.querySelector('.doc-file');
 
-                    const $label = $row.find('.doc-label').length ?
-                        $row.find('.doc-label') :
-                        $row.find('input[name*="[label]"]');
+                    if (label) label.setAttribute('name', `documents[${i}][label]`);
+                    if (type) type.setAttribute('name', `documents[${i}][type]`);
+                    if (file) file.setAttribute('name', `documents[${i}][file]`);
 
-                    const $type = $row.find('.doc-type').length ?
-                        $row.find('.doc-type') :
-                        $row.find('select[name*="[type]"]');
-
-                    const $file = $row.find('.doc-file').length ?
-                        $row.find('.doc-file') :
-                        $row.find('input[type="file"][name*="[file]"]');
-
-                    if ($label.length) $label.attr('name', `documents[${i}][label]`);
-                    if ($type.length) $type.attr('name', `documents[${i}][type]`);
-                    if ($file.length) $file.attr('name', `documents[${i}][file]`);
-
-                    const $remove = $row.find('.remove-doc');
-                    if ($remove.length) {
-                        ($rows.length === 1) ? $remove.addClass('d-none'): $remove.removeClass('d-none');
+                    // remove button visibility
+                    const removeBtn = row.querySelector('.remove-doc');
+                    if (removeBtn) {
+                        if (rows.length === 1) removeBtn.classList.add('d-none');
+                        else removeBtn.classList.remove('d-none');
                     }
                 });
             }
-            window.reindexDocs = reindexDocs;
 
-            // Add/Remove document rows + mark dynamic rows
-            if ($addDocBtn.length && $docTpl.length && $documentsWrap.length) {
-                $addDocBtn.on('click', function() {
-                    const $node = $($docTpl.html());
-
-                    $node.attr('data-dynamic-row',
-                        '1'); // ✅ so upload fallback applies only to dynamic rows
-
-                    // clear fields
-                    $node.find('input[type="text"]').val('');
-                    $node.find('select').val('');
-                    $node.find('input[type="file"]').val('');
-                    $node.find('.file-upload-info').val('');
-
-                    $documentsWrap.append($node);
+            // add document
+            if (addDocBtn && tpl && docsWrap) {
+                addDocBtn.addEventListener('click', function() {
+                    const fragment = tpl.content.cloneNode(true);
+                    docsWrap.appendChild(fragment);
                     reindexDocs();
                 });
 
-                $documentsWrap.on('click', '.remove-doc', function() {
-                    $(this).closest('.doc-row').remove();
+                // remove document
+                docsWrap.addEventListener('click', function(e) {
+                    const btn = e.target.closest('.remove-doc');
+                    if (!btn) return;
+                    const row = btn.closest('.doc-row');
+                    if (row) row.remove();
                     reindexDocs();
                 });
 
-                // initial
                 reindexDocs();
             }
 
-            /**
-             * ============================================================
-             * 3) ✅ FILE UPLOAD HANDLERS (NO DOUBLE TRIGGER)
-             * Strategy:
-             * - For doc rows: trigger ONLY on rows marked data-dynamic-row="1"
-             *   (so the first server-rendered row can keep template plugin binding without double firing)
-             * - For bank statement: always trigger
-             * ============================================================
-             */
-            $(document)
-                .off('click.fileUploadBrowse')
-                .on('click.fileUploadBrowse', '.file-upload-browse', function(e) {
-
-                    const $btn = $(this);
-                    const $row = $btn.closest('.doc-row');
-
-                    // If inside a doc row, only handle dynamically added rows
-                    if ($row.length) {
-                        if (!$row.is('[data-dynamic-row]')) {
-                            // Let your theme/plugin handle the initial row
-                            return;
-                        }
-
-                        // Our fallback for dynamic rows
-                        e.preventDefault();
-                        e.stopImmediatePropagation();
-
-                        const $fileInput = $row.find('input[type="file"].file-upload-default').first();
-                        if ($fileInput.length) $fileInput.trigger('click');
-                        return;
-                    }
-
-                    // Not a doc-row => e.g bank statement upload UI
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-
-                    const $container = $btn.closest('.form-group');
-                    const $fileInput = $container.find('input[type="file"].file-upload-default').first();
-                    if ($fileInput.length) $fileInput.trigger('click');
-                });
-
-            // Show filename for ANY file input
-            $(document)
-                .off('change.fileUploadDefault')
-                .on('change.fileUploadDefault', 'input[type="file"].file-upload-default', function() {
-                    const fileName = (this.files && this.files.length) ? this.files[0].name : '';
-                    $(this).closest('.doc-row, .form-group').find('.file-upload-info').val(fileName);
-                });
-
-            /**
-             * ============================================================
-             * 4) APPLY FORM: Parsley validate, then submit manually (NO AJAX)
-             * + fill phone hidden fields before submit
-             * + optional phone validity check
-             * ============================================================
-             */
-
-            if ($applyForm.length) {
-
-                // ✅ Parsley: border-only (no text warnings)
-                const parsleyApply = $applyForm.parsley({
-                    errorClass: 'is-invalid',
-                    successClass: 'is-valid',
-                    errorsWrapper: '<span></span>',
-                    errorTemplate: ''
-                });
-
-                // Toggle Bootstrap borders based on Parsley state
-                $applyForm.on('field:error', function(e) {
-                    e.field.$element.addClass('is-invalid').removeClass('is-valid');
-                });
-
-                $applyForm.on('field:success', function(e) {
-                    e.field.$element.removeClass('is-invalid'); // keep clean (no green)
-                    // e.field.$element.addClass('is-valid'); // enable if you want green
-                });
-
-                // helper: bootstrap alert (BS4 + BS5 compatible)
-                function showFormAlert(type, message) {
-                    const $container = $('#formAlertContainer');
-
-                    if (!$container.length) return;
-
-                    const isBs5 = !!window.bootstrap;
-                    const closeBtn = isBs5 ?
-                        `<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>` :
-                        `<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>`;
-
-                    $container.html(`
-            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-                ${message}
-                ${closeBtn}
-            </div>
-        `);
-
-                    setTimeout(function() {
-                        const $alert = $container.find('.alert');
-                        if (!$alert.length) return;
-
-                        if (isBs5) {
-                            const el = $alert.get(0);
-                            const instance = bootstrap.Alert.getOrCreateInstance(el);
-                            instance.close();
-                        } else {
-                            $alert.alert('close');
-                        }
-                    }, 5000);
-                }
-
-                $('#submitApplyBtn').on('click', function(e) {
-                    e.preventDefault();
-
-                    if ($documentsWrap.length) reindexDocs();
-                    fillPhoneHiddenFields();
-
-                    parsleyApply.validate();
-                    if (!parsleyApply.isValid()) return;
-
-                    // ✅ Optional: block submit if invalid phone (Bootstrap alert)
-                    if (iti && phoneInput && phoneInput.value.trim() !== '' && iti.isValidNumber && !iti
-                        .isValidNumber()) {
-                        $(phoneInput).addClass('is-invalid');
-                        showFormAlert('danger',
-                            '<strong>Error:</strong> Please enter a valid phone number.');
-                        phoneInput.focus();
-                        return;
-                    }
-
-                    $applyForm.trigger('submit');
-                });
-
-                // If user submits via Enter key
-                $applyForm.on('submit', function(e) {
-                    if ($documentsWrap.length) reindexDocs();
-                    fillPhoneHiddenFields();
-
-                    if (iti && phoneInput && phoneInput.value.trim() !== '' && iti.isValidNumber && !iti
-                        .isValidNumber()) {
-                        e.preventDefault();
-                        $(phoneInput).addClass('is-invalid');
-                        showFormAlert('danger',
-                            '<strong>Error:</strong> Please enter a valid phone number.');
-                        phoneInput.focus();
-                        return false;
-                    }
-                });
-            }
-
-
-            /**
-             * ============================================================
-             * 5) OPTIONAL: Standalone loan form (AJAX)
-             * ============================================================
-             */
-            if ($loanForm.length) {
-                $loanForm.parsley();
-
-                $loanForm.on('submit', function(e) {
-                    e.preventDefault();
-
-                    $loanForm.find('.invalid-feedback').text('').hide();
-                    $loanForm.find('.form-control').removeClass('is-invalid');
-
-                    const parsley = $loanForm.parsley();
-                    if (!parsley.validate()) return false;
-
-                    const $btn = $('#submitLoanBtn');
-                    const $btnText = $('#btnText');
-                    const original = $btnText.text();
-
-                    $btn.prop('disabled', true);
-                    $btnText.text('Submitting...');
-
-                    $.ajax({
-                        url: "{{ route('user.loans.store') }}",
-                        type: "POST",
-                        data: $loanForm.serialize(),
-                        success: function() {
-                            window.location.href = "{{ route('user.loans.index') }}";
-                        },
-                        error: function(xhr) {
-                            $btn.prop('disabled', false);
-                            $btnText.text(original);
-
-                            if (xhr.status === 422 && xhr.responseJSON && xhr.responseJSON
-                                .errors) {
-                                const errors = xhr.responseJSON.errors;
-
-                                $.each(errors, function(field, messages) {
-                                    const errorId = '#error-' + field.replace(/\./g,
-                                        '_');
-                                    $(errorId).text(messages[0]).show();
-                                    $loanForm.find('[name="' + field + '"]').addClass(
-                                        'is-invalid');
-                                });
-                            } else {
-                                alert('Something went wrong. Please try again.');
-                            }
-                        }
-                    });
-                });
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-
-            const phoneInput = document.querySelector('#phone');
-            if (!phoneInput || !window.intlTelInput) return;
-
-            const form = phoneInput.closest('form');
-
-            const hCountryCode = document.getElementById('phone_country_code');
-            const hNational = document.getElementById('phone_national');
-            const hE164 = document.getElementById('phone_e164');
-            const hIso = document.getElementById('phone_country_iso');
-
-            const iti = window.intlTelInput(phoneInput, {
-                initialCountry: "auto",
-                separateDialCode: true,
-                preferredCountries: ["ng", "us", "gb", "ca"],
-                geoIpLookup: function(callback) {
-                    fetch("https://ipapi.co/json/")
-                        .then(res => res.json())
-                        .then(data => callback((data.country_code || "us").toLowerCase()))
-                        .catch(() => callback("us"));
-                },
-                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
-            });
-
-            function fillPhoneHiddenFields() {
-                if (!iti) return;
-
-                const data = iti.getSelectedCountryData() || {};
-
-                const dialCode = data.dialCode ? `+${data.dialCode}` : '';
-                const iso = data.iso2 ? data.iso2.toUpperCase() : '';
-
-                const national = (phoneInput.value || '').replace(/\D/g, '');
-                const e164 = iti.getNumber();
-
-                if (hCountryCode) hCountryCode.value = dialCode;
-                if (hIso) hIso.value = iso;
-                if (hNational) hNational.value = national;
-                if (hE164) hE164.value = e164;
-            }
-
-            // Keep values updated live
-            phoneInput.addEventListener('input', fillPhoneHiddenFields);
-            phoneInput.addEventListener('blur', fillPhoneHiddenFields);
-            phoneInput.addEventListener('countrychange', fillPhoneHiddenFields);
-
-            // CRITICAL: populate before submit
+            // ============================================================
+            // 3) Manual submit: prevent double-submit + ensure docs indexed
+            // ============================================================
             if (form) {
                 form.addEventListener('submit', function(e) {
+
+                    // ensure dynamic doc names are correct for backend
+                    reindexDocs();
                     fillPhoneHiddenFields();
 
-                    // Optional hard validation
-                    if (phoneInput.value.trim() !== '' && !iti.isValidNumber()) {
+                    // optional: block invalid phone at client (server still validates)
+                    if (iti && phoneInput && phoneInput.value.trim() !== '' && iti.isValidNumber && !iti
+                        .isValidNumber()) {
                         e.preventDefault();
-                        alert('Please enter a valid phone number.');
+                        phoneInput.classList.add('is-invalid');
                         phoneInput.focus();
+                        return;
+                    }
+
+                    // prevent double submit
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerText = 'Submitting...';
                     }
                 });
             }
         });
-
-        // ============================================================
-        // Bank Statement Upload (single, isolated handler)
-        // Prevents double-trigger issue
-        // ============================================================
-
-        $(document).off('click.bankUpload').on('click.bankUpload', '.bank-upload-browse', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            $('.bank-upload-input').first().trigger('click');
-        });
-
-        $(document).off('change.bankUpload').on('change.bankUpload', '.bank-upload-input', function() {
-            const fileName = this.files && this.files.length ? this.files[0].name : '';
-            $('.bank-upload-info').val(fileName);
-        });
     </script>
-
-
 
     <style>
         .iti {
@@ -1279,17 +929,6 @@
 
         .iti__country-list {
             z-index: 9999;
-        }
-
-        /* Hide Parsley error text globally */
-        .parsley-errors-list,
-        .parsley-required,
-        .parsley-type,
-        .parsley-pattern,
-        .parsley-length,
-        .parsley-min,
-        .parsley-max {
-            display: none !important;
         }
     </style>
 @endpush

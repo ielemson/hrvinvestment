@@ -14,8 +14,11 @@ use Illuminate\Validation\Rule;
 
 class LoanKycController extends Controller
 {
+
+
     public function store(Request $request)
     {
+        // dd($request->all());
         $user = $request->user();
 
         $projectTypes = [
@@ -45,12 +48,13 @@ class LoanKycController extends Controller
             'phone_country_iso'   => ['nullable', 'string', 'max:5'],
             'gender'              => ['required', 'string', 'max:50'],
             'address'             => ['required', 'string', 'max:255'],
+            'country'             => ['required', 'string', 'max:255'],
             'city'                => ['required', 'string', 'max:100'],
             'state'               => ['required', 'string', 'max:100'],
 
             'documents'           => ['required', 'array', 'min:1'],
             'documents.*.label'   => ['required', 'string', 'max:255'],
-            'documents.*.type'    => ['required', 'in:id_card,proof_of_income,proof_of_address,selfie,other'],
+            'documents.*.type'    => ['required', 'in:id_card,proof_of_income,proof_of_address,selfie,other,passport'],
             'documents.*.file'    => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
 
             // ---------------- LOAN (personal) ----------------
@@ -88,7 +92,7 @@ class LoanKycController extends Controller
             DB::transaction(function () use ($user, $request, $validated) {
 
                 // 1) Upsert KYC
-                $kyc = Kyc::firstOrCreate(['user_id' => $user->id]);
+                $kyc = Kyc::firstOrNew(['user_id' => $user->id]);
 
                 $kyc->fill([
                     'full_name'          => $validated['full_name'],
@@ -99,29 +103,32 @@ class LoanKycController extends Controller
                     'phone_country_iso'  => $validated['phone_country_iso'] ?? null,
                     'gender'             => $validated['gender'],
                     'address'            => $validated['address'],
+                    'country'            => $validated['country'],
                     'city'               => $validated['city'],
                     'state'              => $validated['state'],
-
                     'status'             => 'submitted',
                     'rejection_reason'   => null,
                     'reviewed_by'        => null,
                     'reviewed_at'        => null,
                 ])->save();
 
-                // 2) Store dynamic KYC docs (now the method exists)
+                // 2) Store dynamic KYC docs
                 foreach ($validated['documents'] as $index => $docRow) {
-                    $this->storeDynamicDoc($request, $kyc, $docRow, $index);
+                    $this->storeDynamicDoc($request, $kyc, $docRow, (int) $index);
                 }
 
                 // 3) Bank statement upload for loan
-                $bankStatementPath = $request->file('bank_account_statement')
-                    ->store('bank_statements', 'public');
+                $bankFile = $request->file('bank_account_statement');
+                if (!$bankFile || !$bankFile->isValid()) {
+                    throw new \RuntimeException('Bank statement upload is missing or invalid.');
+                }
+
+                $bankStatementPath = $bankFile->store('bank_statements', 'public');
 
                 // 4) Create Loan
                 $loan = Loan::create([
                     'user_id'                     => $user->id,
 
-                    // personal loan
                     'amount_requested'            => $validated['amount_requested'],
                     'tenure_months'               => $validated['tenure_months'],
                     'repayment_method'            => $validated['repayment_method'],
@@ -130,12 +137,10 @@ class LoanKycController extends Controller
                     'interest_rate'               => $validated['interest_rate'],
                     'purpose'                     => $validated['purpose'],
 
-                    // workflow
                     'status'                      => 'under_review',
                     'current_level'               => 'risk_questionnaire',
                     'current_level_status'        => 'under_review',
 
-                    // project/company
                     'project_name'                => $validated['project_name'],
                     'company_name'                => $validated['company_name'],
                     'company_address'             => $validated['company_address'],
@@ -155,7 +160,7 @@ class LoanKycController extends Controller
                     'bank_account_statement_path' => $bankStatementPath,
                 ]);
 
-                // 5) ✅ Workflow levels (idempotent: prevents duplicate key errors)
+                // 5) Workflow levels (idempotent)
                 foreach (array_keys(\App\Models\Loan::WORKFLOW_LEVELS) as $key) {
                     $loan->workflowLevels()->updateOrCreate(
                         [
@@ -185,32 +190,31 @@ class LoanKycController extends Controller
         }
     }
 
-    /**
-     * Store a single dynamic KYC document row.
-     */
+
     private function storeDynamicDoc(Request $request, Kyc $kyc, array $docRow, int $index): void
     {
-        // When validating, we require documents.*.file, so this is just extra safety
-        if (!isset($docRow['file']) || !$request->hasFile("documents.$index.file")) {
-            return;
+        // ✅ IMPORTANT: do NOT check $docRow['file'] — uploaded files are not inside $validated array reliably
+        if (!$request->hasFile("documents.$index.file")) {
+            throw new \RuntimeException("Missing document upload at index {$index}");
         }
 
         $file = $request->file("documents.$index.file");
 
+        if (!$file || !$file->isValid()) {
+            throw new \RuntimeException("Invalid document file at index {$index}");
+        }
+
         $type  = $docRow['type'] ?? 'other';
         $label = $docRow['label'] ?? 'Document';
 
-        // Normalize / lock allowed types
-        $allowedTypes = ['id_card', 'proof_of_income', 'proof_of_address', 'selfie', 'other'];
+        // ✅ Keep this list aligned with your validation (added passport)
+        $allowedTypes = ['id_card', 'proof_of_income', 'proof_of_address', 'selfie', 'other', 'passport'];
         if (!in_array($type, $allowedTypes, true)) {
             $type = 'other';
         }
 
-        /**
-         * Replace-only types: keep just the latest for core KYC docs.
-         * Remove this block if you want unlimited even for id_card, etc.
-         */
-        $replaceTypes = ['id_card', 'proof_of_income', 'proof_of_address', 'selfie'];
+        // Replace-only types
+        $replaceTypes = ['id_card', 'proof_of_income', 'proof_of_address', 'selfie', 'passport'];
         if (in_array($type, $replaceTypes, true)) {
             $existing = KycDocument::where('kyc_id', $kyc->id)
                 ->where('type', $type)
@@ -218,7 +222,6 @@ class LoanKycController extends Controller
                 ->first();
 
             if ($existing) {
-                // Delete old file safely (optional)
                 try {
                     Storage::disk('public')->delete($existing->file_path);
                 } catch (\Exception $e) {

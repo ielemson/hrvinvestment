@@ -80,16 +80,30 @@ class Loan extends Model
         'first_due_date' => 'date',
     ];
 
+    // const WORKFLOW_LEVELS = [
+    //     'procedure_agreement'     => 'Debt Financing Procedure Agreement', // (11%)
+    //     'risk_questionnaire'      => 'Creditworthiness Evaluation Questionnaire', // (11%) renamed label only
+    //     'risk_report'             => 'Risk Appraisal and Assessment Report', // (11%)
+    //     'funding_terms'           => 'Proposed Debt Financing/Funding Terms Agreement', // (11%)
+    //     'financial_cooperation'   => 'Financial Cooperation Agreement', // (11%)
+    //     'loan_disbursement_agree' => 'Official Loan and Disbursement Agreement', // (11%)
+    //     'rsd_agreement'           => 'Refundable Security Deposit Agreement', // (11%)
+    //     'rsd_invoice'             => 'RSD Invoice', // (11%)
+    //     'disbursement_approval'   => 'Loan Disbursement Approval', // (12%)
+    // ];
+
     public const WORKFLOW_LEVELS = [
-        'risk_questionnaire'      => 'Risk Appraisal and Assessment Questionnaire',
+        'debt_procedure'          => 'Debt Financing Procedure Agreement',
+        'credit_questionnaire'    => 'Creditworthiness Evaluation Questionnaire',
         'risk_report'             => 'Risk Appraisal and Assessment Report',
         'funding_terms'           => 'Proposed Debt Financing/Funding Terms Agreement',
+        'financial_cooperation'   => 'Financial Cooperation Agreement',
         'loan_disbursement_agree' => 'Official Loan and Disbursement Agreement',
         'rsd_agreement'           => 'Refundable Security Deposit Agreement',
         'rsd_invoice'             => 'RSD Invoice',
         'disbursement_approval'   => 'Loan Disbursement Approval',
-
     ];
+
 
     public function user(): BelongsTo
     {
