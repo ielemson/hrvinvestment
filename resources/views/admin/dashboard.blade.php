@@ -242,7 +242,7 @@
                                                         <i class="mdi mdi-pencil"></i>
                                                     </a>
 
-                                                    <a href="{{ route('admin.loans.index', ['user_id' => $user->id]) }}"
+                                                    <a href="{{ route('admin.users.loans.index', $user->id) }}"
                                                         class="btn btn-outline-info" title="Loans">
                                                         <i class="mdi mdi-cash-multiple"></i>
                                                     </a>

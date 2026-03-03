@@ -147,6 +147,8 @@ Route::prefix('admin')
 
         /** Loan Review Workflow */
         Route::get('/loans', [LoanReviewController::class, 'index'])->name('loans.index');
+        Route::get('/users/{user}/loans', [LoanReviewController::class, 'userLoans'])
+            ->name('users.loans.index');
         Route::get('/loans/{loan}', [LoanReviewController::class, 'show'])->name('loans.show');
         Route::post('/loans/{loan}/approve', [LoanReviewController::class, 'approve'])->name('loans.approve');
         Route::post('/loans/{loan}/reject', [LoanReviewController::class, 'reject'])->name('loans.reject');

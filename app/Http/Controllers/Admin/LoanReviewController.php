@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Loan;
+use App\Models\User;
 use App\Notifications\LoanStatusChanged;
 use Illuminate\Http\Request;
 use App\Mail\LoanWorkflowUpdatedMail;
@@ -59,6 +60,52 @@ class LoanReviewController extends Controller
             'active' => Loan::where('status', 'active')->count(),
         ]);
         return view('admin.loans.index', compact('loans', 'statusCounts'));
+    }
+
+
+    public function userLoans(User $user, Request $request)
+    {
+        $query = Loan::with(['user', 'reviewedBy'])
+            ->where('user_id', $user->id)
+            ->whereNotIn('status', ['draft'])
+            ->latest('created_at');
+
+        // Optional filters still work
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            // In a user-specific list, "search user" is redundant,
+            // so search loan fields instead (adjust to your columns)
+            $query->where(function ($q) use ($search) {
+                $q->where('reference', 'like', "%{$search}%")
+                    ->orWhere('purpose', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('min_amount') || $request->filled('max_amount')) {
+            $query->whereBetween('amount_requested', [
+                $request->min_amount ?? 0,
+                $request->max_amount ?? 999999999
+            ]);
+        }
+
+        $loans = $query->paginate(25)->appends($request->query());
+
+        // If your stats must be for THIS user, do it like this:
+        $statusCounts = collect([
+            'submitted'    => Loan::where('user_id', $user->id)->where('status', 'submitted')->count(),
+            'under_review' => Loan::where('user_id', $user->id)->where('status', 'under_review')->count(),
+            'approved'     => Loan::where('user_id', $user->id)->where('status', 'approved')->count(),
+            'rejected'     => Loan::where('user_id', $user->id)->where('status', 'rejected')->count(),
+            'disbursed'    => Loan::where('user_id', $user->id)->where('status', 'disbursed')->count(),
+            'active'       => Loan::where('user_id', $user->id)->where('status', 'active')->count(),
+        ]);
+
+        return view('admin.loans.index', compact('user', 'loans', 'statusCounts'));
     }
 
 
