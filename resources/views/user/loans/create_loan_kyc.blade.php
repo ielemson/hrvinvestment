@@ -620,17 +620,23 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="tenure_months">Tenure (Months) <span
+                                        <label for="tenure_months">Tenure (Years) <span
                                                 class="text-danger">*</span></label>
+
                                         <select class="form-control @error('tenure_months') is-invalid @enderror"
                                             id="tenure_months" name="tenure_months" required>
+
                                             <option value="">-- Select --</option>
-                                            @foreach ([3, 6, 9, 12, 18, 24] as $m)
-                                                <option value="{{ $m }}"
-                                                    {{ old('tenure_months') == $m ? 'selected' : '' }}>{{ $m }}
-                                                    months</option>
+
+                                            @foreach ([1, 2, 3, 5, 6, 7, 8, 9, 10] as $y)
+                                                <option value="{{ $y }}"
+                                                    {{ old('tenure_months') == $y ? 'selected' : '' }}>
+                                                    {{ $y }} {{ $y == 1 ? 'year' : 'years' }}
+                                                </option>
                                             @endforeach
+
                                         </select>
+
                                         @error('tenure_months')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror

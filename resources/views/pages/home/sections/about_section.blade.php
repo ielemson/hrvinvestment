@@ -8,7 +8,8 @@
 
                 <p class="wow-outer">
                     <span class="wow slideInDown" data-wow-delay=".05s">
-                        HV Capitals Investment is a boutique investment and wealth management firm dedicated to helping
+                        HV RF1 Investments & HV Royalty II Investment is a boutique investment and wealth
+                        management firm dedicated to helping
                         individuals, families, and businesses grow and protect their capital through disciplined,
                         transparent strategies. Instead of chasing trends, the firm focuses on long-term partnerships,
                         clear communication, and portfolios that match each client’s real goals and risk profile.
@@ -27,8 +28,8 @@
 
             <div class="col-md-10 col-lg-6 wow-outer">
                 <img class="img-responsive wow slideInLeft"
-                    src="{{ asset('assets/images/large-features-3-570x368.jpg') }}" alt="About HV Capitals Investment"
-                    width="570" height="368" />
+                    src="{{ asset('assets/images/large-features-3-570x368.jpg') }}"
+                    alt="About HV RF1 Investments & HV Royalty II Investment" width="570" height="368" />
             </div>
         </div>
     </div>

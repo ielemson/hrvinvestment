@@ -3,7 +3,7 @@
 {{-- Use minimal header for auth pages --}}
 @section('header_variant', 'minimal')
 
-@section('title', 'Create Account - HV Capitals')
+@section('title', 'Create Account - HV RF1 Investments & HV Royalty II')
 
 @section('banner')
     @include('partials.page-banner', [
@@ -25,11 +25,12 @@
 
                             <div class="text-center mb-4">
                                 <a href="{{ route('home') }}" class="d-inline-block mb-3">
-                                    <img src="{{ asset('assets/images/logo.png') }}" alt="HV Capitals" width="171"
-                                        height="39">
+                                    <img src="{{ asset('assets/images/logo.png') }}" alt="HV RF1 Investments & HV Royalty II"
+                                        width="171" height="39">
                                 </a>
                                 <h3 class="mb-1">Create your account</h3>
-                                <p class="text-muted mb-0">Get started with HV Capitals in minutes.</p>
+                                <p class="text-muted mb-0">Get started with HV RF1 Investments & HV Royalty II in
+                                    minutes.</p>
                             </div>
 
                             <form method="POST" action="{{ route('register') }}" class="rd-form">

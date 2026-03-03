@@ -2,7 +2,7 @@
 <html class="wide wow-animation" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <title>@yield('title', 'HV Capitals')</title>
+    <title>@yield('title', 'HV RF1 Investments & HV Royalty II')</title>
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport"
         content="width=device-width height=device-height initial-scale=1.0 maximum-scale=1.0 user-scalable=0">

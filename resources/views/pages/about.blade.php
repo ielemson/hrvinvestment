@@ -10,7 +10,7 @@
                 <!-- MAIN: About Us -->
                 <div class="layout-bordered__main text-center">
                     <div class="layout-bordered__main-inner">
-                        <h3>About HV</h3>
+                        <h3>About Us</h3>
                         <p>
                             HV UK RF1 INVESTMENTS LTD &amp; HV Royalty Acquisition II Trust specializes in strategic
                             financing and

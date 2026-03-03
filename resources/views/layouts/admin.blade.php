@@ -110,7 +110,8 @@
     <script src="{{ asset('admin/js/settings.js') }}"></script>
     <script src="{{ asset('admin/js/todolist.js') }}"></script>
     <script src="{{ asset('admin/js/file-upload.js') }}"></script>
-
+    <script src="{{ asset('admin/vendors/datatables.net/jquery.datatables.js') }}"></script>
+    <script src="{{ asset('admin/vendors/datatables.net-bs4/datatables.bootstrap4.js') }}"></script>
     <!-- endinject -->
 
     <!-- Custom js for this page -->

@@ -6,7 +6,8 @@
 
 <head>
     <!-- Site Title-->
-    {{-- resources/views/layouts/app.blade.php head section --}} <title>{{ $settings->meta_title ?? ($settings->site_name ?? 'HV Capitals') }}</title>
+    {{-- resources/views/layouts/app.blade.php head section --}} <title>
+        {{ $settings->meta_title ?? ($settings->site_name ?? 'HV RF1 Investments & HV Royalty II') }}</title>
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,15 +22,16 @@
     {{-- Core SEO Meta --}}
     <meta name="description" content="{{ $settings->meta_description ?? '' }}">
     <meta name="keywords" content="{{ $settings->meta_keywords ?? '' }}">
-    <meta name="author" content="{{ $settings->site_name ?? 'HV Capitals' }}">
+    <meta name="author" content="{{ $settings->site_name ?? 'HV RF1 Investments & HV Royalty II' }}">
 
     {{-- Open Graph / Social Media --}}
-    <meta property="og:title" content="{{ $settings->meta_title ?? ($settings->site_name ?? 'HV Capitals') }}">
+    <meta property="og:title"
+        content="{{ $settings->meta_title ?? ($settings->site_name ?? 'HV RF1 Investments & HV Royalty II') }}">
     <meta property="og:description" content="{{ $settings->meta_description ?? '' }}">
     <meta property="og:image" content="{{ asset($settings->og_image_path ?? $settings->logo_path) }}">
     <meta property="og:url" content="{{ request()->url() }}">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="{{ $settings->site_name ?? 'HV Capitals' }}">
+    <meta property="og:site_name" content="{{ $settings->site_name ?? 'HV RF1 Investments & HV Royalty II' }}">
 
 
     <!-- Stylesheets-->

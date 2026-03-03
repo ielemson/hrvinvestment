@@ -16,7 +16,7 @@ class KycSubmitted extends Mailable
     public $user;
     public $appName;
 
-    public function __construct(Kyc $kyc, $appName = 'HV Capitals')
+    public function __construct(Kyc $kyc, $appName = 'HV RF1 Investments & HV Royalty II')
     {
         $this->kyc = $kyc;
         $this->user = $kyc->user;

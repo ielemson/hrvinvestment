@@ -59,7 +59,7 @@ class LoanKycController extends Controller
 
             // ---------------- LOAN (personal) ----------------
             'amount_requested'    => ['required', 'numeric', 'min:1000'],
-            'tenure_months'       => ['required', 'integer', 'in:3,6,9,12,18,24'],
+            'tenure_months'       => ['required', 'integer', 'in:1, 2, 3, 5, 6, 7, 8, 9, 10'],
             'repayment_method'    => ['required', 'in:bank_transfer,direct_debit,wallet'],
             'employment_type'     => ['required', 'in:salary,business,freelance,agriculture,other'],
             'income_band'         => ['required', 'in:below_100k,100k_300k,300k_700k,above_700k'],

@@ -13,15 +13,44 @@ use Illuminate\Support\Facades\DB;
 class UserLoanController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+        // $user = auth()->user();
+
+        // $loans = $user->loans()
+        //     ->latest()
+        //     ->paginate(10);
+
+        // return view('user.loans.index', compact('loans'));
+
         $user = auth()->user();
 
-        $loans = $user->loans()
-            ->latest()
-            ->paginate(10);
+        // Match your DB enum values
+        $allowedStatuses = [
+            'draft',
+            'submitted',
+            'under_review',
+            'approved',
+            'rejected',
+            'disbursed',
+            'active',
+            'completed',
+            'defaulted',
+            'cancelled',
+        ];
 
-        return view('user.loans.index', compact('loans'));
+        $status = $request->string('status')->toString();
+
+        $query = $user->loans()->latest();
+
+        // Filter using DB column: current_level_status
+        if ($status !== '' && in_array($status, $allowedStatuses, true)) {
+            $query->where('current_level_status', $status);
+        }
+
+        $loans = $query->paginate(10)->withQueryString();
+
+        return view('user.loans.index', compact('loans', 'status'));
     }
 
     public function create()

@@ -5,7 +5,8 @@
                 <div class="box-cta-thin">
                     <h4 class="wow-outer">
                         <span class="wow slideInRight">
-                            Start Planning Your <span class="fw-bold">Investment Strategy</span> With HV Capitals Today
+                            Start Planning Your <span class="fw-bold">Investment Strategy</span> With HV UK RF1
+                            Investments & HV Royalty II Trust Today
                         </span>
                     </h4>
                     <div class="wow-outer button-outer">

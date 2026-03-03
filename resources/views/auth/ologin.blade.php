@@ -3,7 +3,7 @@
 {{-- Use the minimal header for auth pages --}}
 @section('header_variant', 'minimal')
 
-@section('title', 'Login - HV Capitals')
+@section('title', 'Login - HV RF1 Investments & HV Royalty II')
 
 @section('banner')
     @include('partials.page-banner', [
@@ -24,8 +24,8 @@
                         <div class="card-body p-4 p-md-5">
                             <div class="text-center mb-4">
                                 <a href="{{ route('home') }}" class="d-inline-block mb-3">
-                                    <img src="{{ asset('assets/images/logo.png') }}" alt="HV Capitals" width="171"
-                                        height="39">
+                                    <img src="{{ asset('assets/images/logo.png') }}" alt="HV RF1 Investments & HV Royalty II"
+                                        width="171" height="39">
                                 </a>
                                 <h3 class="mb-1">Welcome back</h3>
                                 <p class="text-muted mb-0">Sign in to continue to your dashboard.</p>

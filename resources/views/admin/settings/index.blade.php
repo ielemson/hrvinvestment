@@ -21,7 +21,7 @@
                             <label for="site_name">Site Name</label>
                             <input type="text" class="form-control @error('site_name') is-invalid @enderror"
                                 id="site_name" name="site_name" value="{{ old('site_name', $settings->site_name) }}"
-                                placeholder="e.g. HV Capitals">
+                                placeholder="e.g. HV RF1 Investments & HV Royalty II">
                             @error('site_name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

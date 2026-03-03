@@ -131,8 +131,9 @@
                             </a>
                         </div>
 
+                        {{-- Blade (admin.dashboard) — DataTables table ONLY (remove Laravel pagination entirely) --}}
                         <div class="table-responsive">
-                            <table class="table center-aligned-table">
+                            <table id="user-listing" class="table">
                                 <thead>
                                     <tr class="bg-light">
                                         <th class="border-bottom-0">#</th>
@@ -171,7 +172,8 @@
                                         @endphp
 
                                         <tr>
-                                            <td>{{ ++$sn }}</td>
+                                            {{-- DataTables handles paging, so simple loop numbering is fine --}}
+                                            <td>{{ $loop->iteration }}</td>
 
                                             <td>
                                                 <div class="d-flex align-items-center">
@@ -191,25 +193,25 @@
                                             </td>
 
                                             <td>
-                                                <span class="text-muted">{{ $user->phone ?? '—' }}</span>
+                                                <span class="text-muted">{{ $user->phone_display ?? '—' }}</span>
                                             </td>
 
                                             <td>
-                                                <span class="badge badge-{{ $kycBadge['class'] }}">
+                                                <label class="badge badge-{{ $kycBadge['class'] }}">
                                                     {{ $kycBadge['text'] }}
-                                                </span>
+                                                </label>
                                             </td>
 
                                             <td>
-                                                <span class="badge badge-info">{{ $user->loans_count ?? 0 }}</span>
+                                                <label class="badge badge-info">{{ $user->loans_count ?? 0 }}</label>
                                             </td>
 
                                             <td>
                                                 @if ($loanBadge)
                                                     <div class="d-flex flex-column">
-                                                        <span class="badge badge-{{ $loanBadge['class'] }} w-fit">
+                                                        <label class="badge badge-{{ $loanBadge['class'] }} w-fit mb-0">
                                                             {{ $loanBadge['text'] }}
-                                                        </span>
+                                                        </label>
                                                         <small class="text-muted mt-1">
                                                             {{ $currencySymbol }}{{ number_format($user->latest_loan_amount ?? 0) }}
                                                             @if ($user->latest_loan_date)
@@ -225,7 +227,7 @@
 
                                             <td>
                                                 <span class="text-muted">
-                                                    {{ $user->created_at ? \Carbon\Carbon::parse($user->created_at)->format('d M, Y') : '—' }}
+                                                    {{ $user->created_at ? \Carbon\Carbon::parse($user->created_at)->format('Y/m/d') : '—' }}
                                                 </span>
                                             </td>
 
@@ -247,7 +249,6 @@
                                                 </div>
                                             </td>
                                         </tr>
-
                                     @empty
                                         <tr>
                                             <td colspan="8" class="text-center py-4 text-muted">
@@ -259,9 +260,36 @@
                             </table>
                         </div>
 
+
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(function() {
+            const tableId = '#user-listing';
+
+            if ($.fn.DataTable && $.fn.DataTable.isDataTable(tableId)) {
+                return;
+            }
+
+            $(tableId).DataTable({
+                responsive: true,
+                pageLength: 10,
+                lengthChange: true,
+                ordering: true,
+                info: true,
+                autoWidth: false,
+                columnDefs: [{
+                    orderable: false,
+                    targets: -1
+                }]
+            });
+        });
+    </script>
+@endpush>

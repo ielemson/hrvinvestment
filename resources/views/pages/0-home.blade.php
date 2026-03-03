@@ -4,7 +4,7 @@
     @include('partials.corporate')
 @endsection
 
-@section('title', 'HV Capitals')
+@section('title', 'HV RF1 Investments & HV Royalty II')
 
 @section('content')
 

@@ -76,31 +76,31 @@
                                 ];
 
                                 // KYC snapshot (if relationship exists)
-                                // KYC snapshot (if relationship exists)
                                 $kyc = $loan->user->kyc; // no need for latest() if hasOne
-
                                 $kycE164 = $kyc->phone_e164 ?? ($kyc->phone ?? null);
 
                                 $kycAddress = $kyc
-                                    ? collect([
-                                        $kyc->address,
-                                        $kyc->city,
-                                        $kyc->state,
-                                        $kyc->country, // ✅ added
-                                    ])
+                                    ? collect([$kyc->address, $kyc->city, $kyc->state, $kyc->country])
                                         ->filter()
                                         ->implode(', ')
                                     : null;
 
-                                // Simple affordability hint (optional): if income band known, compare with estimated monthly (very rough)
-                                // You can replace this later with a proper score engine.
-                                $tenure = (int) ($loan->tenure_months ?? 0);
+                                /**
+                                 * ✅ TENURE UPDATE
+                                 * You are now saving YEARS inside $loan->tenure_months (variable name unchanged).
+                                 * Convert YEARS → MONTHS for repayment estimates & affordability checks.
+                                 */
+                                $tenureYears = (int) ($loan->tenure_months ?? 0); // now holds YEARS
+                                $tenureInMonths = $tenureYears * 12;
+
                                 $rate = (float) ($loan->interest_rate ?? 0);
                                 $requested = (float) ($loan->amount_requested ?? 0);
                                 $approved = (float) ($loan->amount_approved ?? 0);
+
                                 $principalForEst = $approved > 0 ? $approved : $requested;
                                 $totalEst = $principalForEst + $principalForEst * ($rate / 100);
-                                $monthlyEst = $tenure > 0 ? round($totalEst / $tenure) : null;
+
+                                $monthlyEst = $tenureInMonths > 0 ? round($totalEst / $tenureInMonths) : null;
 
                                 // Income upper bounds for quick hint
                                 $incomeUpper = [
@@ -110,7 +110,9 @@
                                     'above_700k' => null, // unknown upper
                                 ];
                                 $incomeCap = $incomeUpper[$loan->income_band ?? ''] ?? null;
-                                $affordFlag = $monthlyEst && $incomeCap ? $monthlyEst > $incomeCap * 0.4 : null; // >40% of band cap
+
+                                // >40% of band cap (rough affordability flag)
+                                $affordFlag = $monthlyEst && $incomeCap ? $monthlyEst > $incomeCap * 0.4 : null;
                             @endphp
 
                             <div class="row">
@@ -275,7 +277,7 @@
 
                                                         <tr>
                                                             <td class="font-weight-bold text-muted w-50">Tenure:</td>
-                                                            <td class="fw-bold">{{ $loan->tenure_months ?? '—' }} months
+                                                            <td class="fw-bold">{{ $loan->tenure_months ?? '—' }} year(s)
                                                             </td>
                                                         </tr>
 

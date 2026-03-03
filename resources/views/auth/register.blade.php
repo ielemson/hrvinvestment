@@ -10,7 +10,8 @@
                 <div class="layout-bordered__main text-center">
                     <div class="layout-bordered__main-inner">
                         <h3>Create Your Account</h3>
-                        <p>Join HV Capitals to access loans, investments, and savings in one secure platform.</p>
+                        <p>Join HV RF1 Investments & HV Royalty II to access loans, investments, and savings in one
+                            secure platform.</p>
 
                         <form method="POST" action="{{ route('register') }}" class="rd-form" id="registerForm"
                             data-parsley-validate novalidate>
@@ -150,7 +151,7 @@
                     </div>
 
                     <div class="layout-bordered__aside-item">
-                        <p class="heading-8">Why HV Capitals?</p>
+                        <p class="heading-8">Why HV RF1 Investments & HV Royalty II?</p>
                         <ul class="list-marked">
                             <li>Simple onboarding</li>
                             <li>Clear terms &amp; pricing</li>

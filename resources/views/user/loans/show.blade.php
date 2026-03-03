@@ -58,7 +58,7 @@
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span class="text-muted">Tenure</span>
-                                <strong>{{ $loan->tenure_months }} months</strong>
+                                <strong>{{ $loan->tenure_months }} year(s)</strong>
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">

@@ -9,7 +9,8 @@
                     <div class="box-minimal-main wow-outer">
                         <h4 class="box-minimal-title wow slideInDown">Experienced Investment Team</h4>
                         <p class="wow fadeInUpSmall">
-                            HV Capitals Investment is backed by experienced investment professionals, analysts, and
+                            HV RF1 Investments & HV Royalty II Investment is backed by experienced investment
+                            professionals, analysts, and
                             client
                             advisors who work together to design disciplined, research-driven strategies for every
                             client.
@@ -42,7 +43,8 @@
                         <h4 class="box-minimal-title wow slideInDown" data-wow-delay=".2s">Disciplined, Transparent
                             Approach</h4>
                         <p class="wow fadeInUpSmall" data-wow-delay=".2s">
-                            While investing always involves risk, HV Capitals follows a disciplined process, clear
+                            While investing always involves risk, HV RF1 Investments & HV Royalty II follows a
+                            disciplined process, clear
                             communication,
                             and ongoing portfolio monitoring to help clients stay informed and confident in their
                             decisions.

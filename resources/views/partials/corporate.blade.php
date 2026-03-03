@@ -15,7 +15,7 @@
                         <a class="rd-navbar-brand" href="{{ route('home') }}">
                             @php
                                 $logo = $siteSettings->logo_path ?? 'assets/images/logo-342.png';
-                                $siteName = $siteSettings->site_name ?? 'HV Capitals';
+                                $siteName = $siteSettings->site_name ?? 'HV RF1 Investments & HV Royalty II';
                             @endphp
 
                             <img src="{{ asset($logo) }}" alt="{{ $siteName }}" class="navbar-logo" loading="lazy"

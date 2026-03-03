@@ -14,7 +14,7 @@ class KycRejected extends Mailable
     public $kyc;
     public $appName;
 
-    public function __construct(Kyc $kyc, $appName = 'HV Capitals')
+    public function __construct(Kyc $kyc, $appName = 'HV RF1 Investments & HV Royalty II')
     {
         $this->kyc = $kyc;
         $this->appName = $appName;

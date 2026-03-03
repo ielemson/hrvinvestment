@@ -14,7 +14,6 @@
                             <option value="">All Status</option>
                             @php
                                 $statuses = [
-                                    'draft',
                                     'submitted',
                                     'under_review',
                                     'approved',
@@ -22,8 +21,6 @@
                                     'disbursed',
                                     'active',
                                     'completed',
-                                    'defaulted',
-                                    'cancelled',
                                 ];
                             @endphp
                             @foreach ($statuses as $s)
@@ -83,7 +80,7 @@
                                                     <span class="text-muted">—</span>
                                                 @endif
                                             </td>
-                                            <td>{{ $loan->tenure_months }} mo</td>
+                                            <td>{{ $loan->tenure_months }}yr(s)</td>
                                             <td>
                                                 @php
                                                     $badge = match ($loan->status) {

@@ -27,7 +27,8 @@
                         </div>
 
                         <h3>Reset Your Password</h3>
-                        <p>Create a new password to regain access to your HV Capitals account.</p>
+                        <p>Create a new password to regain access to your HV RF1 Investments & HV Royalty II
+                            account.</p>
 
                         <form method="POST" action="{{ route('password.store') }}" class="rd-form" id="resetPasswordForm"
                             data-parsley-validate novalidate>

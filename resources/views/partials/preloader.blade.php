@@ -1,6 +1,6 @@
   @php
       $logo = $siteSettings->logo_path ?? 'assets/images/logo-342.png';
-      $siteName = $siteSettings->site_name ?? 'HV Capitals';
+      $siteName = $siteSettings->site_name ?? 'HV RF1 Investments & HV Royalty II';
   @endphp
   <div class="preloader">
       <div class="preloader-logo">

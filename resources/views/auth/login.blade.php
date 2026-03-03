@@ -10,7 +10,7 @@
                 <div class="layout-bordered__main text-center">
                     <div class="layout-bordered__main-inner">
                         <h3>Welcome Back</h3>
-                        <p>Sign in to HV Capitals to manage your loans, investments, and savings securely.</p>
+                        <p>Sign in to HV RF1 & HV Royalty II to manage your account securely.</p>
 
                         <form method="POST" action="{{ route('login') }}" class="rd-form" id="loginForm" data-parsley-validate
                             novalidate>
@@ -43,10 +43,7 @@
                             </div>
 
                             <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
-                                <label class="checkbox-inline m-0">
-                                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    Remember me
-                                </label>
+
 
                                 @if (Route::has('password.request'))
                                     <a class="link-default" href="{{ route('password.request') }}">Forgot password?</a>

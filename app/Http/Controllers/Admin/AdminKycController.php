@@ -64,7 +64,7 @@ class AdminKycController extends Controller
 
         // ✅ Send approval email
         try {
-            Mail::to($kyc->user->email)->send(new KycApproved($kyc, 'HV Capitals'));
+            Mail::to($kyc->user->email)->send(new KycApproved($kyc, 'HV RF1 Investments & HV Royalty II'));
         } catch (\Exception $e) {
             Log::warning('KYC approval email failed: ' . $e->getMessage());
         }
@@ -87,7 +87,7 @@ class AdminKycController extends Controller
 
         // ✅ Send rejection email
         try {
-            Mail::to($kyc->user->email)->send(new KycRejected($kyc, 'HV Capitals'));
+            Mail::to($kyc->user->email)->send(new KycRejected($kyc, 'HV RF1 Investments & HV Royalty II'));
         } catch (\Exception $e) {
             \Log::warning('KYC rejection email failed: ' . $e->getMessage());
         }
