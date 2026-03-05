@@ -12,8 +12,11 @@ class FrontPagesController extends Controller
      */
     public function home()
     {
+        // $services = \App\Models\Service::where('is_active', true)
+        //     ->inRandomOrder()
+        //     ->get();
         $services = \App\Models\Service::where('is_active', true)
-            ->inRandomOrder()
+            ->orderBy('sort_order', 'asc')
             ->get();
 
         return view('pages.home', compact('services'));
