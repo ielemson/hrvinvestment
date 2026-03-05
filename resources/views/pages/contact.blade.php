@@ -152,7 +152,7 @@
                         <div class="unit flex-row unit-spacing-xxs">
                             <div class="unit-left"><span
                                     class="icon novi-icon icon-sm icon-primary fas fa-map-marker"></span></div>
-                            <div class="unit-body"><a href="#">{{ $contactAddress }}</a>
+                            <div class="unit-body"><a href="#">{!! $contactAddress !!}</a>
                             </div>
                         </div>
                     </div>
