@@ -9,7 +9,7 @@
           $contactPhone = $siteSettings->contact_phone ?? '';
           $contactAddress = $siteSettings->contact_address ?? null;
 
-          $plainAddress = \Illuminate\Support\Str::limit(strip_tags($contactAddress), 100);
+          $plainAddress = \Illuminate\Support\Str::limit(strip_tags($contactAddress), 80);
       @endphp
 
 
