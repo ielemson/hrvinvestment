@@ -8,7 +8,11 @@
           $contactEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.com';
           $contactPhone = $siteSettings->contact_phone ?? '';
           $contactAddress = $siteSettings->contact_address ?? null;
+
+          $plainAddress = \Illuminate\Support\Str::limit(strip_tags($contactAddress), 100);
       @endphp
+
+
 
 
       <header class="page-header section"
@@ -35,7 +39,8 @@
                                           </div>
                                           <div class="unit-body">
                                               @if (!empty($contactAddress))
-                                                  <span>{{ \Illuminate\Support\Str::limit($contactAddress, 50) }}</span>
+                                                  <span><a
+                                                          href="{{ url('/contact') }}">{!! nl2br(e($plainAddress)) !!}</a></span>
                                               @endif
                                           </div>
                                       </div>
