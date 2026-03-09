@@ -5,7 +5,7 @@
           $logo = $siteSettings->logo_path ?? '';
           $logoMini = $siteSettings->logo_mini_path ?? $logo;
 
-          $contactEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.com';
+          $contactEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.co.uk';
           $contactPhone = $siteSettings->contact_phone ?? '';
           $contactAddress = $siteSettings->contact_address ?? null;
 

@@ -60,7 +60,7 @@ class RolesAndUsersSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
         $admin = User::firstOrCreate(
-            ['email' => 'admin@hvrfinvestments.com'],
+            ['email' => 'admin@hvrfinvestments.co.uk'],
             [
                 'name' => 'System Admin',
                 'password' => Hash::make('Admin@12345'),
@@ -77,7 +77,7 @@ class RolesAndUsersSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
         $borrower = User::firstOrCreate(
-            ['email' => 'user@hvrfinvestments.com'],
+            ['email' => 'user@hvrfinvestments.co.uk'],
             [
                 'name' => 'Test Borrower',
                 'password' => Hash::make('User@12345'),

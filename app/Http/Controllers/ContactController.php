@@ -26,7 +26,7 @@ class ContactController extends Controller
         // ✅ DB email first, then MAIL_FROM_ADDRESS, then hard fallback
         $toEmail = $settings?->contact_email
             ?: config('mail.from.address')
-            ?: 'info@hvrfinvestments.com';
+            ?: 'info@hvrfinvestments.co.uk';
 
         Mail::to($toEmail)->send(new ContactMessageMail($data));
 

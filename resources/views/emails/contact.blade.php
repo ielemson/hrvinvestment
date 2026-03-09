@@ -2,7 +2,7 @@
     $appName = config('app.name', 'HV RF Investments');
 
     $logoPath = $siteSettings->logo_path ?? null;
-    $logoUrl = $logoPath ? 'https://www.hvrfinvestments.com/' . ltrim($logoPath, '/') : null;
+    $logoUrl = $logoPath ? 'https://www.hvrfinvestments.co.uk/' . ltrim($logoPath, '/') : null;
 
     $brandPrimary = '#1E88E5';
     $brandDark = '#111827';

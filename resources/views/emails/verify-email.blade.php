@@ -12,10 +12,10 @@
 
     // Public logo url (email-safe)
     $logoPath = $siteSettings->logo_path ?? null;
-    $logoUrl = $logoPath ? 'https://www.hvrfinvestments.com/' . ltrim($logoPath, '/') : null;
+    $logoUrl = $logoPath ? 'https://www.hvrfinvestments.co.uk/' . ltrim($logoPath, '/') : null;
 
     // Optional support email (fallback)
-    $supportEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.com';
+    $supportEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.co.uk';
 
     // Social links (optional)
     $twitter = $siteSettings->twitter_url ?? null;

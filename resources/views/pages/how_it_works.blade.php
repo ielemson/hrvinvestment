@@ -110,7 +110,7 @@
                         'Construction / Edifice',
                     ];
 
-                    $emailTo = $siteSettings->contact_email ?? 'info@hvrfinvestments.com';
+                    $emailTo = $siteSettings->contact_email ?? 'info@hvrfinvestments.co.uk';
                     $subject = rawurlencode('Private Capital Requirement');
                     $body = rawurlencode(
                         "Hello HV UK RF1 Investments\n\nMy capital requirement falls under:\n\nProject summary:\nTimeline:\nLocation:\n\nRegards,",
@@ -299,7 +299,7 @@
 
             {{-- CTA --}}
             @php
-                $emailTo = $siteSettings->contact_email ?? 'info@hvrfinvestments.com';
+                $emailTo = $siteSettings->contact_email ?? 'info@hvrfinvestments.co.uk';
                 $subject = rawurlencode('Capital Terms Enquiry');
                 $body = rawurlencode(
                     "Hello HV UK RF1 Investments\n\nI would like to discuss capital terms for my project.\n\nProject summary:\nCapital required:\nLocation:\nPreferred currency:\nTimeline:\n\nRegards,",

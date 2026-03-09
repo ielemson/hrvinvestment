@@ -3,9 +3,9 @@
     $siteName =
         $siteSettings->site_name ??
         config('app.name', 'HV UK RF1 INVESTMENTS LTD &amp; HV Royalty Acquisition II Trust');
-    $logo = 'https://www.hvrfinvestments.com/' . ($siteSettings->logo_path ?? 'uploads/settings/default-logo.png');
+    $logo = 'https://www.hvrfinvestments.co.uk/' . ($siteSettings->logo_path ?? 'uploads/settings/default-logo.png');
 
-    $contactEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.com';
+    $contactEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.co.uk';
     $contactPhone = $siteSettings->contact_phone ?? '';
     $contactAddress = $siteSettings->contact_address ?? null;
 

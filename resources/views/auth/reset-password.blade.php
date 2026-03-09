@@ -8,7 +8,7 @@
             <div class="layout-bordered">
 
                 @php
-                    $contactEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.com';
+                    $contactEmail = $siteSettings->contact_email ?? 'info@hvrfinvestments.co.uk';
                     $siteName = $siteSettings->site_name ?? config('app.name', 'HV UK RF1 INVESTMENTS LTD');
                     $logo = $siteSettings->logo_path ?? '';
                     $logoMini = $siteSettings->logo_mini_path ?? $logo;
