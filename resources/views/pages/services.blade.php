@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('content')
     @include('partials.breadcrumb', ['header' => 'Our Services'])
     <section class="section section-md bg-default novi-background">
@@ -95,5 +94,4 @@
 
         </div>
     </section>
-
 @endsection

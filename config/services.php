@@ -31,4 +31,12 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'gnews' => [
+    'base_url' => env('GNEWS_BASE_URL', 'https://gnews.io/api/v4'),
+    'api_key' => env('GNEWS_API_KEY'),
+    'language' => env('GNEWS_LANGUAGE', 'en'),
+    'country' => env('GNEWS_COUNTRY', 'gb'),
+    'category' => env('GNEWS_CATEGORY', 'business'),
+    'max' => env('GNEWS_MAX_RESULTS', 10),
+],
 ];

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\FrontPagesController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\InsightController;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserDashboardController;
@@ -42,6 +43,8 @@ Route::controller(FrontPagesController::class)->group(function () {
     Route::get('/privacy-policy', 'privacy_policy')->name('privacy.policy');
     Route::get('/terms-condition', 'terms_condition')->name('terms.condition');
 });
+
+Route::get('/insights', [InsightController::class, 'index'])->name('insights.index');
 
 /** Single contact POST (remove duplicates) */
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.send');
